@@ -1,0 +1,169 @@
+nav a {
+    text-decoration: none;
+}
+
+.title {
+    background: #118bee;
+    color: #fff;
+}
+
+.closed {
+    background: #920de9;
+    color: #fff;
+}
+
+button.full_width {
+    width: 100%!important;
+    padding-top: 0.5rem!important;
+    padding-bottom: 0.5rem!important;
+    background-color: #0097fc;
+}
+
+form{
+    max-width: unset!important;
+    min-width: unset!important;
+    background-color: #118bee15;
+    padding: 5px;
+}
+
+form div textarea{
+    width: 100%;  
+    padding-top: 0.5rem!important;
+    padding-bottom: 0.5rem!important;
+}
+
+form div button {
+    padding-top: 0.1rem!important;
+    padding-bottom: 0.125rem!important;
+    background-color: #0097fc;
+    width: 100%;    
+    
+}
+
+footer {
+    padding-top: 0.5rem!important;
+    padding-bottom: 0.5rem!important;
+}
+
+.kanban-item::before {
+  font-weight: bold;
+  color: #555;
+  font-size: 1em;
+  content: attr(data-eid)"\A";
+  white-space: pre;
+  display: block;
+}
+
+/* Priority indicator dot — appended after the task ID on the same line.
+   Emoji circles render in their own color so the task ID stays neutral grey. */
+.kanban-item[data-priority="Low"]::before    { content: attr(data-eid) " 🟢\A"; }
+.kanban-item[data-priority="Medium"]::before { content: attr(data-eid) " 🟠\A"; }
+.kanban-item[data-priority="High"]::before   { content: attr(data-eid) " 🔴\A"; }
+
+/* Strike through the task ID line and title when a card is in the Closed column.
+   Selector targets the jKanban board container so it updates on drag without needing
+   to update the item's own data-status attribute. */
+[data-id="Closed"] .kanban-item::before,
+[data-id="Closed"] .kanban-item {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+  animation: pulse 1s linear infinite;
+}
+
+.loader:after {
+  content: '';
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: scaleUp 1s linear infinite;
+}
+
+@keyframes scaleUp {
+  0% { transform: translate(-50%, -50%) scale(0) }
+  60% , 100% { transform: translate(-50%, -50%)  scale(1)}
+}
+@keyframes pulse {
+  0% , 60% , 100%{ transform:  scale(1) }
+  80% { transform:  scale(1.2)}
+}
+
+.attachment-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.attachment-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachment-size {
+  color: #888;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.attachment-delete {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.8em;
+  min-width: auto;
+  width: auto;
+}
+
+.attachment-upload {
+  margin-top: 0.5rem;
+}
+
+#attachmentsList_Dialog em {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.board-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.board-link {
+  font-size: 1.1em;
+}
+
+.board-date {
+  color: #888;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+#boardsList em {
+  color: #888;
+  font-size: 0.9em;
+}

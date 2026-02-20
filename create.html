@@ -1,0 +1,47 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Reminda by Ope Ltd</title>
+    <link rel="stylesheet" href="mvp.css" />
+    <link rel="stylesheet" href="app.css" />
+    <script src="auth.js"></script>
+    <script src="create.js"></script>
+    <link rel="icon" type="image/x-icon" href="reminda.ico">
+</head>
+
+<body>
+    <main>
+<nav>
+        <img alt="reminda" src="kanban.png" height="60">
+        <h1>Reminda</h1>        
+        <ul>
+            <li>
+                <a href="#">Load Board</a>
+                <ul id="boardsDropdown">
+                    <li><a href="#">Loading...</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="signin" style="text-align: center;">        
+        <section>
+            <form onsubmit="return false;">
+                <header>
+                    <h2>Create a new Kanban board</h2>
+                </header>
+                <label for="boardname">Board Name:</label>
+                <input type="text" id="boardname" size="40" placeholder="Board Name">                
+                <button id="btnCreateBoard" type="submit" onclick="createKanbanFeatureService(event)">Create Board</button>
+                <div id="createSpinner" style="display:none;text-align:center;margin-top:1rem;">
+                    <span class="loader"></span>
+                    <p>Creating board...</p>
+                </div>
+
+            </form>
+        </section>
+    </div>
+    </main>
+    
+</body>
+</html>

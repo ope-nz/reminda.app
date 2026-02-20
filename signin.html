@@ -1,0 +1,24 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Reminda by Ope Ltd</title>
+    <link rel="stylesheet" href="mvp.css" />
+    <script src="auth.js"></script>
+    <link rel="icon" type="image/x-icon" href="reminda.ico">
+
+</head>
+
+<body style="overflow-y:hidden;overflow-x:hidden;">
+    <div id="signin" style="width:100vw; height:100vh; text-align: center;margin-top:100px">
+		<figure><img alt="reminda" src="kanban.png" height="60"></figure>
+        <h1 style="height: 50px;">Reminda by Ope Ltd</h1>    
+        <h2 style="height: 50px;">Please Sign in</h2>
+        <button id="signInBtn">Sign In</button>       
+    </div>    
+    <script>
+        // attach event handlers
+        document.getElementById('signInBtn').addEventListener('click', startSignIn);            
+    </script>
+</body>
+</html>

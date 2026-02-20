@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reminda by Ope Ltd</title>
+  <link rel="stylesheet" href="jkanban.min.css" />
+  <link rel="stylesheet" href="mvp.css" />
+  <link rel="stylesheet" href="app.css" />
+  <link rel="icon" type="image/x-icon" href="reminda.ico">
+</head>
+
+<body>
+  <main>
+    <nav>
+      <img alt="reminda" src="kanban.png" height="60">
+      <h1 id="name">Reminda</h1>
+      <ul>
+        <li><a href="create.html">New Board</a></li>
+        <li>
+          <a href="#">Load Board</a>
+          <ul id="boardsDropdown">
+            <li><a href="#">Loading...</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </main>
+  <div id="myKanban"></div>
+  <script src="auth.js"></script>
+  <script src="jkanban.min.js"></script>
+  <script src="app.js"></script>
+
+  <dialog id="dialogEditTitle" style="width:60%;">
+    <p>Edit Task <span id="txtId_Dialog"></span></p>
+    <div>
+      <label for="inpTitle_Dialog">Title</label>
+      <input type="text" autofocus id="inpTitle_Dialog">
+    </div>
+    <div>
+      <label for="inpDescription_Dialog">Description</label>
+      <textarea style="resize: vertical;" rows="6" id="inpDescription_Dialog"></textarea>
+    </div>
+    <div>
+      <label for="selPriority_Dialog">Priority</label>
+      <select id="selPriority_Dialog" style="width:100%;"></select>
+    </div>
+    <div>
+      <button class="full_width" type="button" id="btnSave_Dialog">Save</button>
+      <button class="full_width" type="button" id="btnCancel_Dialog">Cancel</button>
+    </div>
+    <hr>
+    <p>Attachments</p>
+    <div id="attachmentsList_Dialog"></div>
+    <div class="attachment-upload">
+      <input type="file" id="fileInput_Dialog" multiple>
+      <button class="full_width" type="button" id="btnUpload_Dialog">Upload</button>
+    </div>
+  </dialog>
+
+
+</body>
+
+</html>
