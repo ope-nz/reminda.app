@@ -1,0 +1,2123 @@
+﻿/* ============================================================
+   caco3CSS
+   A classless CSS implementation of Esri's Calcite Design System
+   https://developers.arcgis.com/calcite-design-system/
+   ============================================================ */
+
+
+/* ============================================================
+   Design Tokens (CSS Custom Properties)
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --caco3-color-brand:         #007AC2;
+  --caco3-color-brand-hover:   #00619B;
+  --caco3-color-brand-press:   #004F7D;
+
+  /* Surface (page backgrounds) */
+  --caco3-color-surface-1: #F7F7F7;
+  --caco3-color-surface-2: #FFFFFF;
+  --caco3-color-surface-3: #F2F2F2;
+  --caco3-color-surface-4: #EBEBEB;
+
+  /* Foreground (UI element backgrounds — cards, panels, inputs) */
+  --caco3-color-foreground-1: #FFFFFF;
+  --caco3-color-foreground-2: #F7F7F7;
+  --caco3-color-foreground-3: #EBEBEB;
+
+  /* Text */
+  --caco3-color-text-1:       #141414;
+  --caco3-color-text-2:       #4A4A4A;
+  --caco3-color-text-3:       #6B6B6B;
+  --caco3-color-text-inverse: #FFFFFF;
+  --caco3-color-text-link:    #00619B;
+
+  /* Borders */
+  --caco3-color-border-1:     #D4D4D4;
+  --caco3-color-border-2:     #DEDEDE;
+  --caco3-color-border-3:     #EBEBEB;
+  --caco3-color-border-input: #949494;
+
+  /* Status */
+  --caco3-color-status-info:           #00619B;
+  --caco3-color-status-info-hover:     #00476F;
+  --caco3-color-status-success:        #288835;
+  --caco3-color-status-success-hover:  #1C6226;
+  --caco3-color-status-warning:        #DA7C0B;
+  --caco3-color-status-warning-hover:  #B56508;
+  --caco3-color-status-danger:         #D83020;
+  --caco3-color-status-danger-hover:   #A82517;
+
+  /* Inverse (dark surface for light text) */
+  --caco3-color-inverse: #1A1A1A;
+
+  /* ---- Typography ---- */
+  --caco3-font-family:      "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --caco3-font-family-code: Consolas, "Courier New", monospace;
+
+  --caco3-font-size--3: 0.625rem;    /* 10px */
+  --caco3-font-size--2: 0.6875rem;   /* 11px */
+  --caco3-font-size--1: 0.75rem;     /* 12px */
+  --caco3-font-size-0:  0.875rem;    /* 14px */
+  --caco3-font-size-1:  1rem;        /* 16px */
+  --caco3-font-size-2:  1.125rem;    /* 18px */
+  --caco3-font-size-3:  1.25rem;     /* 20px */
+  --caco3-font-size-4:  1.5rem;      /* 24px */
+  --caco3-font-size-5:  1.75rem;     /* 28px */
+  --caco3-font-size-6:  2rem;        /* 32px */
+  --caco3-font-size-7:  2.5rem;      /* 40px */
+  --caco3-font-size-8:  3rem;        /* 48px */
+
+  --caco3-font-weight-light:  300;
+  --caco3-font-weight-normal: 400;
+  --caco3-font-weight-medium: 500;
+  --caco3-font-weight-bold:   700;
+
+  --caco3-line-height-base:    1.5;
+  --caco3-line-height-heading: 1.25;
+
+  /* ---- Spacing ---- */
+  --caco3-spacing-0: 2px;
+  --caco3-spacing-1: 4px;
+  --caco3-spacing-2: 8px;
+  --caco3-spacing-3: 12px;
+  --caco3-spacing-4: 16px;
+  --caco3-spacing-5: 20px;
+  --caco3-spacing-6: 24px;
+  --caco3-spacing-7: 28px;
+  --caco3-spacing-8: 32px;
+
+  /* ---- Borders & Corner Radius ---- */
+  --caco3-border-width:          1px;
+  --caco3-corner-radius-sharp:   0px;   /* buttons, inputs */
+  --caco3-corner-radius-round:   4px;   /* dialogs, panels, cards */
+  --caco3-corner-radius-pill:    100%;  /* pills, tags */
+  --caco3-corner-radius-circle:  50px;  /* round button variant */
+
+  /* ---- Animation ---- */
+  --caco3-animation-timing:      150ms ease-in-out;
+  --caco3-animation-timing-slow: 300ms ease-in-out;
+
+  /* ---- Shadows (exact Calcite design tokens) ---- */
+  --caco3-shadow-sm: 0 2px 8px 0 rgba(0, 0, 0, 0.04), 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+  --caco3-shadow-md: 0 4px 20px 0 rgba(0, 0, 0, 0.08), 0 12px 30px rgba(0, 0, 0, 0.1);
+  --caco3-shadow-none: 0 0 0 0 rgba(0, 0, 0, 0);
+
+  /* ---- Z-Index ---- */
+  --caco3-z-index-header:  400;
+  --caco3-z-index-overlay: 700;
+  --caco3-z-index-modal:   800;
+
+  /* ---- Focus ---- */
+  --caco3-focus-color:  #007AC2;
+  --caco3-focus-width:  2px;
+  --caco3-focus-offset: 2px;
+
+  /* ---- Drawer ---- */
+  --caco3-drawer-width:          360px;
+  --caco3-drawer-bg:             var(--caco3-color-foreground-1);
+  --caco3-drawer-border:         var(--caco3-color-border-1);
+  --caco3-drawer-shadow:         var(--caco3-shadow-md);
+  --caco3-drawer-z:              var(--caco3-z-index-modal);
+  --caco3-drawer-backdrop-color: rgba(0, 0, 0, 0.4);
+  --caco3-drawer-header-height:  52px;
+  --caco3-drawer-footer-height:  52px;
+
+  /* ---- Popover ---- */
+  --caco3-popover-bg:     var(--caco3-color-foreground-1);
+  --caco3-popover-border: var(--caco3-color-border-1);
+  --caco3-popover-radius: var(--caco3-corner-radius-round);
+  --caco3-popover-shadow: var(--caco3-shadow-md);
+  --caco3-popover-gap:    6px;
+  --caco3-popover-z:      calc(var(--caco3-z-index-overlay) - 1);
+}
+
+
+/* ============================================================
+   Dark Mode
+   ============================================================ */
+
+/*
+  Dark mode tokens are applied when:
+    a) the system prefers dark AND data-mode="light" is NOT set, OR
+    b) data-mode="dark" is explicitly set on :root (<html>)
+
+  Toggle via JS: document.documentElement.dataset.mode = 'dark' | 'light'
+*/
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode="light"]) {
+    --caco3-color-brand:       #009AF2;
+    --caco3-color-brand-hover: #33AEFF;
+    --caco3-color-brand-press: #66C2FF;
+
+    --caco3-color-surface-1: #363636;
+    --caco3-color-surface-2: #2B2B2B;
+    --caco3-color-surface-3: #212121;
+    --caco3-color-surface-4: #141414;
+
+    --caco3-color-foreground-1: #404040;
+    --caco3-color-foreground-2: #4A4A4A;
+    --caco3-color-foreground-3: #545454;
+
+    --caco3-color-text-1:       #FFFFFF;
+    --caco3-color-text-2:       #BFBFBF;
+    --caco3-color-text-3:       #9E9E9E;
+    --caco3-color-text-inverse: #141414;
+    --caco3-color-text-link:    #33AEFF;
+
+    --caco3-color-border-1:     #545454;
+    --caco3-color-border-2:     #4A4A4A;
+    --caco3-color-border-3:     #404040;
+    --caco3-color-border-input: #757575;
+
+    --caco3-color-status-info:           #00A0FF;
+    --caco3-color-status-info-hover:     #33B2FF;
+    --caco3-color-status-success:        #36DA43;
+    --caco3-color-status-success-hover:  #5AE365;
+    --caco3-color-status-warning:        #F89927;
+    --caco3-color-status-warning-hover:  #FAB054;
+    --caco3-color-status-danger:         #FE583E;
+    --caco3-color-status-danger-hover:   #FF7A64;
+
+    --caco3-color-inverse: #FFFFFF;
+
+    --caco3-focus-color: #009AF2;
+
+    --caco3-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --caco3-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --caco3-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+}
+
+:root[data-mode="dark"] {
+  --caco3-color-brand:       #009AF2;
+  --caco3-color-brand-hover: #33AEFF;
+  --caco3-color-brand-press: #66C2FF;
+
+  --caco3-color-surface-1: #363636;
+  --caco3-color-surface-2: #2B2B2B;
+  --caco3-color-surface-3: #212121;
+  --caco3-color-surface-4: #141414;
+
+  --caco3-color-foreground-1: #404040;
+  --caco3-color-foreground-2: #4A4A4A;
+  --caco3-color-foreground-3: #545454;
+
+  --caco3-color-text-1:       #FFFFFF;
+  --caco3-color-text-2:       #BFBFBF;
+  --caco3-color-text-3:       #9E9E9E;
+  --caco3-color-text-inverse: #141414;
+  --caco3-color-text-link:    #33AEFF;
+
+  --caco3-color-border-1:     #545454;
+  --caco3-color-border-2:     #4A4A4A;
+  --caco3-color-border-3:     #404040;
+  --caco3-color-border-input: #757575;
+
+  --caco3-color-status-info:           #00A0FF;
+  --caco3-color-status-info-hover:     #33B2FF;
+  --caco3-color-status-success:        #36DA43;
+  --caco3-color-status-success-hover:  #5AE365;
+  --caco3-color-status-warning:        #F89927;
+  --caco3-color-status-warning-hover:  #FAB054;
+  --caco3-color-status-danger:         #FE583E;
+  --caco3-color-status-danger-hover:   #FF7A64;
+
+  --caco3-color-inverse: #FFFFFF;
+
+  --caco3-focus-color: #009AF2;
+
+  --caco3-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --caco3-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --caco3-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ============================================================
+   Base Reset
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: var(--caco3-spacing-6);
+  font-family: var(--caco3-font-family);
+  font-size: var(--caco3-font-size-1);
+  font-weight: var(--caco3-font-weight-normal);
+  line-height: var(--caco3-line-height-base);
+  color: var(--caco3-color-text-1);
+  background-color: var(--caco3-color-surface-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* ============================================================
+   Typography
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--caco3-font-family);
+  font-weight: var(--caco3-font-weight-medium);
+  line-height: var(--caco3-line-height-heading);
+  color: var(--caco3-color-text-1);
+  margin-block-start: 0;
+  margin-block-end: var(--caco3-spacing-3);
+}
+
+h1 { font-size: var(--caco3-font-size-8); }
+h2 { font-size: var(--caco3-font-size-7); }
+h3 { font-size: var(--caco3-font-size-6); }
+h4 { font-size: var(--caco3-font-size-5); }
+h5 { font-size: var(--caco3-font-size-4); }
+h6 { font-size: var(--caco3-font-size-3); }
+
+p {
+  color: var(--caco3-color-text-2);
+  margin-block-start: 0;
+  margin-block-end: var(--caco3-spacing-6);
+}
+
+a {
+  color: var(--caco3-color-text-link);
+  text-decoration: underline;
+  transition: color var(--caco3-animation-timing);
+}
+
+a:hover {
+  color: var(--caco3-color-brand);
+}
+
+a:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: var(--caco3-focus-offset);
+  border-radius: var(--caco3-border-radius-shell);
+}
+
+strong, b {
+  font-weight: var(--caco3-font-weight-bold);
+  color: var(--caco3-color-text-1);
+}
+
+em, i {
+  font-style: italic;
+}
+
+small {
+  font-size: var(--caco3-font-size--1);
+  color: var(--caco3-color-text-3);
+}
+
+mark {
+  background-color: rgba(218, 124, 11, 0.2);
+  color: var(--caco3-color-text-1);
+  padding: 0 0.2em;
+  border-radius: 2px;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* ---- Lists ---- */
+
+ul, ol {
+  color: var(--caco3-color-text-2);
+  padding-inline-start: var(--caco3-spacing-6);
+  margin-block-start: 0;
+  margin-block-end: var(--caco3-spacing-6);
+}
+
+li {
+  margin-block-end: var(--caco3-spacing-1);
+}
+
+li:last-child {
+  margin-block-end: 0;
+}
+
+/* ---- Code ---- */
+
+code, kbd, samp {
+  font-family: var(--caco3-font-family-code);
+  font-size: 0.875em;
+  background-color: var(--caco3-color-surface-3);
+  border: var(--caco3-border-width) solid var(--caco3-color-border-1);
+  border-radius: var(--caco3-border-radius-shell);
+  padding: 0.1em 0.4em;
+}
+
+kbd {
+  background-color: var(--caco3-color-foreground-3);
+  box-shadow: 0 1px 0 var(--caco3-color-border-1);
+}
+
+pre {
+  font-family: var(--caco3-font-family-code);
+  font-size: var(--caco3-font-size-0);
+  line-height: 1.6;
+  background-color: var(--caco3-color-surface-3);
+  border: var(--caco3-border-width) solid var(--caco3-color-border-1);
+  border-radius: var(--caco3-border-radius-shell);
+  padding: var(--caco3-spacing-4);
+  overflow-x: auto;
+  margin-block-start: 0;
+  margin-block-end: var(--caco3-spacing-6);
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ---- Block elements ---- */
+
+blockquote {
+  margin-inline: 0;
+  margin-block: 0 var(--caco3-spacing-6);
+  padding-inline: var(--caco3-spacing-4);
+  padding-block: var(--caco3-spacing-2);
+  border-inline-start: 3px solid var(--caco3-color-brand);
+  color: var(--caco3-color-text-3);
+  font-style: italic;
+}
+
+blockquote p:last-child {
+  margin-block-end: 0;
+}
+
+hr {
+  border: none;
+  border-block-start: var(--caco3-border-width) solid var(--caco3-color-border-1);
+  margin-block: var(--caco3-spacing-8);
+}
+
+/* ---- Tables ---- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--caco3-font-size--1);
+  margin-block-end: var(--caco3-spacing-6);
+  background-color: var(--caco3-color-foreground-1);
+  border: var(--caco3-border-width) solid var(--caco3-color-border-3);
+  overflow: hidden;
+}
+
+thead {
+  background-color: var(--caco3-color-foreground-3);
+}
+
+th {
+  text-align: start;
+  font-weight: var(--caco3-font-weight-normal);
+  color: var(--caco3-color-text-1);
+  padding: 0.5rem;
+  border-block-end: var(--caco3-border-width) solid var(--caco3-color-border-3);
+}
+
+td {
+  padding: 0.5rem;
+  color: var(--caco3-color-text-1);
+  border-block-end: var(--caco3-border-width) solid var(--caco3-color-border-3);
+}
+
+tr:last-child td {
+  border-block-end: none;
+}
+
+tbody tr:hover {
+  background-color: var(--caco3-color-surface-3);
+}
+
+
+/* ============================================================
+   Buttons
+
+   Appearance variants use data-appearance:
+     (none) = solid (default)
+     data-appearance="outline"
+     data-appearance="outline-fill"
+     data-appearance="transparent"
+
+   Kind variants use data-kind:
+     (none) = brand (default)
+     data-kind="danger"
+     data-kind="neutral"
+
+   Scale uses data-scale:
+     (none) = medium (default)
+     data-scale="s"
+     data-scale="l"
+
+   Width uses data-width:
+     (none) = auto (default)
+     data-width="full"
+     data-width="half"
+
+   Round: data-round (boolean attribute)
+   ============================================================ */
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--caco3-spacing-2);
+
+  /* Medium scale (default) */
+  font-family: var(--caco3-font-family);
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-normal);
+  line-height: 1;
+  padding-block: 7px;
+  padding-inline: 12px;
+  min-block-size: 32px;
+
+  /* Solid brand appearance (default) */
+  color: var(--caco3-color-text-inverse);
+  background-color: var(--caco3-color-brand);
+  border: var(--caco3-border-width) solid transparent;
+  border-radius: 0;
+
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  vertical-align: middle;
+
+  transition:
+    background-color var(--caco3-animation-timing),
+    color var(--caco3-animation-timing),
+    border-color var(--caco3-animation-timing),
+    box-shadow var(--caco3-animation-timing),
+    opacity var(--caco3-animation-timing);
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background-color: var(--caco3-color-brand-hover);
+}
+
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
+  background-color: var(--caco3-color-brand-press);
+}
+
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: var(--caco3-focus-offset);
+}
+
+button:disabled,
+button[disabled],
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---- Kind: Danger ---- */
+
+button[data-kind="danger"] {
+  background-color: var(--caco3-color-status-danger);
+  border-color: transparent;
+  color: var(--caco3-color-text-inverse);
+}
+
+button[data-kind="danger"]:hover {
+  background-color: var(--caco3-color-status-danger-hover);
+}
+
+/* ---- Kind: Neutral ---- */
+
+button[data-kind="neutral"] {
+  background-color: var(--caco3-color-foreground-3);
+  border-color: var(--caco3-color-border-1);
+  color: var(--caco3-color-text-1);
+}
+
+button[data-kind="neutral"]:hover {
+  background-color: var(--caco3-color-border-1);
+}
+
+button[data-kind="neutral"]:active {
+  background-color: var(--caco3-color-border-2);
+}
+
+/* ---- Appearance: Outline ---- */
+
+button[data-appearance="outline"] {
+  background-color: transparent;
+  border-color: var(--caco3-color-brand);
+  color: var(--caco3-color-brand);
+}
+
+button[data-appearance="outline"]:hover {
+  background-color: transparent;
+  border-color: var(--caco3-color-brand-hover);
+  color: var(--caco3-color-brand-hover);
+}
+
+button[data-appearance="outline"]:active {
+  border-color: var(--caco3-color-brand-press);
+  color: var(--caco3-color-brand-press);
+}
+
+/* ---- Appearance: Outline-fill ---- */
+
+button[data-appearance="outline-fill"] {
+  background-color: var(--caco3-color-foreground-1);
+  border-color: var(--caco3-color-brand);
+  color: var(--caco3-color-brand);
+}
+
+button[data-appearance="outline-fill"]:hover {
+  background-color: var(--caco3-color-foreground-2);
+  border-color: var(--caco3-color-brand-hover);
+  color: var(--caco3-color-brand-hover);
+}
+
+/* ---- Appearance: Transparent ---- */
+
+button[data-appearance="transparent"] {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--caco3-color-brand);
+}
+
+button[data-appearance="transparent"]:hover {
+  background-color: rgba(0, 122, 194, 0.08);
+  color: var(--caco3-color-brand-hover);
+}
+
+/* ---- Danger + Outline ---- */
+
+button[data-kind="danger"][data-appearance="outline"] {
+  background-color: transparent;
+  border-color: var(--caco3-color-status-danger);
+  color: var(--caco3-color-status-danger);
+}
+
+button[data-kind="danger"][data-appearance="outline"]:hover {
+  background-color: transparent;
+  border-color: var(--caco3-color-status-danger-hover);
+  color: var(--caco3-color-status-danger-hover);
+}
+
+button[data-kind="danger"][data-appearance="outline-fill"] {
+  background-color: var(--caco3-color-foreground-1);
+  border-color: var(--caco3-color-status-danger);
+  color: var(--caco3-color-status-danger);
+}
+
+button[data-kind="danger"][data-appearance="outline-fill"]:hover {
+  background-color: var(--caco3-color-foreground-2);
+}
+
+button[data-kind="danger"][data-appearance="transparent"] {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--caco3-color-status-danger);
+}
+
+button[data-kind="danger"][data-appearance="transparent"]:hover {
+  background-color: rgba(216, 48, 32, 0.08);
+  color: var(--caco3-color-status-danger-hover);
+}
+
+/* ---- Scale: Small ---- */
+
+button[data-scale="s"] {
+  font-size: var(--caco3-font-size--2);
+  padding-block: 3px;
+  padding-inline: 8px;
+  min-block-size: 24px;
+}
+
+/* ---- Scale: Large ---- */
+
+button[data-scale="l"] {
+  font-size: var(--caco3-font-size-1);
+  padding-block: 11px;
+  padding-inline: 16px;
+  min-block-size: 44px;
+}
+
+/* ---- Width ---- */
+
+button[data-width="full"] {
+  width: 100%;
+}
+
+button[data-width="half"] {
+  width: 50%;
+}
+
+/* ---- Round ---- */
+
+button[data-round] {
+  border-radius: var(--caco3-corner-radius-circle);
+}
+
+/* ---- Icon sizing ---- */
+
+button i {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ---- Icon-only (square) ---- */
+
+button[data-icon-only] {
+  padding-inline: 0;
+  inline-size: 32px;
+}
+
+button[data-icon-only][data-scale="s"] {
+  inline-size: 24px;
+}
+
+button[data-icon-only][data-scale="l"] {
+  inline-size: 44px;
+}
+
+
+/* ============================================================
+   Form Elements
+   ============================================================ */
+
+/* Standalone label — sits above a text input */
+label {
+  display: block;
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-medium);
+  color: var(--caco3-color-text-1);
+  margin-block-end: var(--caco3-spacing-1);
+  cursor: default;
+}
+
+/* Label wrapping a checkbox or radio — inline layout */
+label:has(input[type="checkbox"]),
+label:has(input[type="radio"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--caco3-spacing-2);
+  font-weight: var(--caco3-font-weight-normal);
+  color: var(--caco3-color-text-1);
+  margin-block-end: var(--caco3-spacing-2);
+  cursor: pointer;
+}
+
+label:has(input[type="checkbox"]:disabled),
+label:has(input[type="radio"]:disabled) {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---- Checkbox ---- */
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  /* Medium (default) — matches Calcite's 16px medium scale */
+  inline-size: 16px;
+  block-size: 16px;
+
+  background-color: var(--caco3-color-foreground-1);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-border-input);
+
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  transition:
+    background-color var(--caco3-animation-timing),
+    box-shadow var(--caco3-animation-timing);
+}
+
+input[type="checkbox"]:hover {
+  box-shadow: inset 0 0 0 2px var(--caco3-color-border-input);
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--caco3-color-brand);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-brand);
+  /* Exact Calcite checkmark path from checkbox.tsx — viewBox 0 0 16 16 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' d='M5.5 12L2 8.689l.637-.636L5.5 10.727l8.022-7.87.637.637z'/%3E%3C/svg%3E");
+}
+
+input[type="checkbox"]:checked:hover {
+  background-color: var(--caco3-color-brand-hover);
+  box-shadow: inset 0 0 0 2px var(--caco3-color-brand-hover);
+}
+
+input[type="checkbox"]:checked:active {
+  background-color: var(--caco3-color-brand-press);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-brand-press);
+}
+
+input[type="checkbox"]:indeterminate {
+  background-color: var(--caco3-color-brand);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-brand);
+  /* Exact Calcite indeterminate dash path from checkbox.tsx */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' d='M13 8v1H3V8z'/%3E%3C/svg%3E");
+}
+
+input[type="checkbox"]:indeterminate:hover {
+  background-color: var(--caco3-color-brand-hover);
+  box-shadow: inset 0 0 0 2px var(--caco3-color-brand-hover);
+}
+
+input[type="checkbox"]:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: var(--caco3-focus-offset);
+}
+
+input[type="checkbox"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Scale: Small — 12px */
+input[type="checkbox"][data-scale="s"] {
+  inline-size: 12px;
+  block-size: 12px;
+}
+
+/* Scale: Large — 20px */
+input[type="checkbox"][data-scale="l"] {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+textarea,
+select {
+  display: block;
+  width: 100%;
+  font-family: var(--caco3-font-family);
+  font-size: var(--caco3-font-size--1);
+  font-weight: var(--caco3-font-weight-normal);
+  color: var(--caco3-color-text-1);
+  background-color: var(--caco3-color-foreground-1);
+  border: var(--caco3-border-width) solid var(--caco3-color-border-1);
+  border-radius: 0;
+  line-height: 1;
+  padding-block: 7px;
+  padding-inline: 12px;
+  margin-block-end: var(--caco3-spacing-4);
+  transition:
+    border-color var(--caco3-animation-timing),
+    box-shadow var(--caco3-animation-timing);
+  appearance: none;
+}
+
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+select {
+  min-block-size: 32px;
+}
+
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):hover,
+textarea:hover,
+select:hover {
+  border-color: var(--caco3-color-border-1);
+}
+
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--caco3-color-brand);
+  box-shadow: 0 0 0 var(--caco3-focus-width) rgba(0, 122, 194, 0.25);
+}
+
+textarea {
+  resize: vertical;
+  min-block-size: 80px;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%236B6B6B' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-inline-end: 28px;
+  cursor: pointer;
+}
+
+
+fieldset {
+  border: var(--caco3-border-width) solid var(--caco3-color-border-1);
+  padding: var(--caco3-spacing-4);
+  margin-block-end: var(--caco3-spacing-6);
+}
+
+legend {
+  font-size: var(--caco3-font-size--1);
+  font-weight: var(--caco3-font-weight-medium);
+  color: var(--caco3-color-text-2);
+  padding-inline: var(--caco3-spacing-1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+/* ============================================================
+   Navigation
+
+   Expected markup:
+     <nav>
+       <a href="/">Brand Title</a>   ← direct-child anchor = brand/logo
+       <ul>                          ← nav link list
+         <li><a href="/map" aria-current="page">Map</a></li>
+         <li><a href="/layers">Layers</a></li>
+       </ul>
+       <div>...</div>                ← optional end slot (search, user icon)
+     </nav>
+   ============================================================ */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--caco3-z-index-header);
+  display: flex;
+  align-items: stretch;  /* let ul and brand link fill the full 64px height */
+  gap: var(--caco3-spacing-6);
+  inline-size: 100%;
+  block-size: 64px;  /* h-16 in Calcite's scale */
+  background-color: var(--caco3-color-foreground-1);
+  border-block-end: var(--caco3-border-width) solid var(--caco3-color-border-3);
+  padding-inline: var(--caco3-spacing-6);
+  box-sizing: border-box;
+}
+
+/* Brand / logo link — first direct-child anchor
+   title:       text-0 (--caco3-font-size-md = 16px) + font-medium
+   description: --caco3-font-size--1 (sm = 12px) + text-2 color          */
+nav > a:first-of-type {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;  /* vertically center title+description within the 64px height */
+  flex-shrink: 0;
+  font-size: var(--caco3-font-size-1);   /* 16px — calcite text-0 / font-size-md */
+  font-weight: var(--caco3-font-weight-medium);
+  line-height: var(--caco3-line-height-heading);
+  color: var(--caco3-color-text-1);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--caco3-animation-timing);
+  /* block-size is set by nav's align-items: stretch */
+}
+
+nav > a:first-of-type:hover {
+  color: var(--caco3-color-text-1);
+  text-decoration: none;
+}
+
+/* Description / subtitle inside the brand link */
+nav > a:first-of-type small {
+  font-size: var(--caco3-font-size--1);  /* 12px — calcite font-size-sm */
+  font-weight: var(--caco3-font-weight-normal);
+  line-height: var(--caco3-line-height-heading);
+  color: var(--caco3-color-text-2);
+}
+
+/* Nav link list — stretches to full 64px via nav's align-items: stretch */
+nav ul {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--caco3-color-text-1);
+}
+
+nav ul li {
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+}
+
+nav ul a {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding-inline: var(--caco3-spacing-4);
+  color: var(--caco3-color-text-1);
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--caco3-animation-timing),
+    background-color var(--caco3-animation-timing);
+}
+
+nav ul a:hover {
+  color: var(--caco3-color-brand);
+  background-color: var(--caco3-color-foreground-3);
+  text-decoration: none;
+}
+
+/* Active link — brand color + 2px bottom indicator */
+nav ul a[aria-current="page"] {
+  color: var(--caco3-color-brand);
+}
+
+nav ul a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  block-size: 2px;
+  background-color: var(--caco3-color-brand);
+}
+
+/* Trailing slot — push to end and self-center (avoids stretching to 64px) */
+nav > *:last-child:not(ul):not(a:first-of-type) {
+  margin-inline-start: auto;
+  align-self: center;
+}
+
+
+/* ============================================================
+   Dialog
+
+   Expected markup:
+     <dialog>
+       <header>
+         <h2>Dialog Title</h2>
+         <button type="button" aria-label="Close">&#x2715;</button>
+       </header>
+       <div>  ← content area
+         <p>Content goes here.</p>
+       </div>
+       <footer>
+         <button>Confirm</button>
+         <button data-kind="neutral">Cancel</button>
+       </footer>
+     </dialog>
+
+   Open with:  dialog.showModal()
+   Close with: dialog.close()
+
+   Size variants: data-size="s" (default) | "m" | "l"
+   ============================================================ */
+
+dialog {
+  position: fixed;
+  z-index: var(--caco3-z-index-modal);
+  inset: 0;          /* stretch to viewport edges so margin: auto has room to work */
+  margin: auto;      /* distribute remaining space equally — centers both axes */
+  block-size: fit-content;
+  flex-direction: column;
+
+  /* Default size — small (32rem) */
+  inline-size: min(32rem, calc(100vw - var(--caco3-spacing-8) * 2));
+  max-block-size: calc(100dvh - var(--caco3-spacing-8) * 2);
+
+  background-color: var(--caco3-color-foreground-1);
+  border: none;
+  border-radius: var(--caco3-corner-radius-round);
+  box-shadow: var(--caco3-shadow-md);
+  padding: 0;
+  overflow: hidden;
+  color: var(--caco3-color-text-1);
+
+  /* Open animation: slide up + fade in */
+  opacity: 0;
+  translate: 0 20px;
+  transition:
+    opacity var(--caco3-animation-timing-slow),
+    translate var(--caco3-animation-timing-slow),
+    display var(--caco3-animation-timing-slow) allow-discrete,
+    overlay var(--caco3-animation-timing-slow) allow-discrete;
+}
+
+dialog[open] {
+  display: flex;
+  opacity: 1;
+  translate: 0 0;
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    translate: 0 20px;
+  }
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  transition:
+    opacity var(--caco3-animation-timing-slow),
+    display var(--caco3-animation-timing-slow) allow-discrete,
+    overlay var(--caco3-animation-timing-slow) allow-discrete;
+}
+
+dialog[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* ---- Dialog Header ---- */
+
+dialog > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding-block: var(--caco3-spacing-3);
+  padding-inline: var(--caco3-spacing-6);
+  border-block-end: var(--caco3-border-width) solid var(--caco3-color-border-3);
+  background-color: var(--caco3-color-foreground-1);
+}
+
+dialog > header :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  font-size: var(--caco3-font-size-2);
+  font-weight: var(--caco3-font-weight-medium);
+  line-height: var(--caco3-line-height-heading);
+  color: var(--caco3-color-text-1);
+}
+
+/* Close button inside header */
+dialog > header > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 32px;
+  block-size: 32px;
+  min-block-size: unset;
+  padding: 0;
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--caco3-color-text-3);
+  font-size: var(--caco3-font-size-1);
+  flex-shrink: 0;
+}
+
+dialog > header > button:hover {
+  background-color: var(--caco3-color-foreground-3);
+  color: var(--caco3-color-text-1);
+}
+
+/* ---- Dialog Content ---- */
+
+dialog > div {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  padding: var(--caco3-spacing-6);
+}
+
+dialog > div > p:last-child {
+  margin-block-end: 0;
+}
+
+/* ---- Dialog Footer ---- */
+
+dialog > footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  gap: var(--caco3-spacing-2);
+  padding-block: var(--caco3-spacing-3);
+  padding-inline: var(--caco3-spacing-6);
+  border-block-start: var(--caco3-border-width) solid var(--caco3-color-border-3);
+  background-color: var(--caco3-color-foreground-2);
+}
+
+/* ---- Size variants ---- */
+
+dialog[data-size="m"] {
+  inline-size: min(48rem, calc(100vw - var(--caco3-spacing-8) * 2));
+}
+
+dialog[data-size="l"] {
+  inline-size: min(94rem, calc(100vw - var(--caco3-spacing-8) * 2));
+}
+
+
+/* ============================================================
+   Card
+
+   Maps to calcite-card. Uses <article> with optional
+   <header>, content children, and <footer>.
+
+   Expected markup:
+     <article>
+       <img src="...">                    ← optional flush thumbnail
+       <header>
+         <h3>Title</h3>
+         <p>Description</p>              ← optional subtitle
+       </header>
+       <div>                             ← or <p>, <ul>, etc.
+         Body content goes here.
+       </div>
+       <footer>
+         <button>Action</button>
+       </footer>
+     </article>
+
+   Selected state: aria-selected="true" or data-selected
+   ============================================================ */
+
+article {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--caco3-color-foreground-1);
+  border: var(--caco3-border-width) solid var(--caco3-color-border-3);
+  border-radius: var(--caco3-corner-radius-sharp);
+  box-shadow: var(--caco3-shadow-none);
+  color: var(--caco3-color-text-1);
+  overflow: hidden;
+}
+
+/* Flush thumbnail — img as first child bleeds edge to edge */
+article > img:first-child {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* ---- Card Header ---- */
+
+article > header {
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--caco3-spacing-2);
+  padding-inline: var(--caco3-spacing-3);
+  border-block-end: var(--caco3-border-width) solid var(--caco3-color-border-3);
+  gap: 2px;
+}
+
+article > header :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-medium);
+  line-height: var(--caco3-line-height-heading);
+  color: var(--caco3-color-text-1);
+}
+
+/* Description / subtitle inside card header */
+article > header > p {
+  margin: 0;
+  font-size: var(--caco3-font-size--1);
+  font-weight: var(--caco3-font-weight-normal);
+  color: var(--caco3-color-text-2);
+  line-height: var(--caco3-line-height-heading);
+}
+
+/* ---- Card Content ---- */
+
+article > div,
+article > section,
+article > p:not(:only-child),
+article > ul,
+article > ol {
+  padding-inline: var(--caco3-spacing-3);
+  padding-block: var(--caco3-spacing-3);
+}
+
+/* Simple card — single <p> as only direct content child */
+article > p:only-child {
+  padding: var(--caco3-spacing-3);
+  margin: 0;
+}
+
+article > div > p:last-child,
+article > section > p:last-child {
+  margin-block-end: 0;
+}
+
+/* ---- Card Footer ---- */
+
+article > footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--caco3-spacing-2);
+  padding-block-start: var(--caco3-spacing-1);
+  padding-block-end: var(--caco3-spacing-3);
+  padding-inline: var(--caco3-spacing-3);
+  border-block-start: var(--caco3-border-width) solid var(--caco3-color-border-3);
+  margin-block-start: auto;
+}
+
+/* ---- Selected state — brand accent on bottom edge ---- */
+
+article[aria-selected="true"],
+article[data-selected] {
+  box-shadow: inset 0 -4px 0 0 var(--caco3-color-brand);
+}
+
+
+/* ============================================================
+   Accordion
+
+   Maps to calcite-accordion. Uses native <details>/<summary>.
+   Adjacent <details> elements share a single border (top border
+   of subsequent items is collapsed).
+
+   Expected markup:
+     <details>
+       <summary>Section title</summary>
+       <p>Content here.</p>
+     </details>
+     <details open>
+       <summary>Open by default</summary>
+       <p>Content here.</p>
+     </details>
+   ============================================================ */
+
+details {
+  background-color: var(--caco3-color-foreground-1);
+  border: var(--caco3-border-width) solid var(--caco3-color-border-2);
+}
+
+/* Collapse the shared border between adjacent accordion items */
+details + details {
+  border-block-start: none;
+}
+
+details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--caco3-spacing-2);
+  padding-inline: var(--caco3-spacing-3);
+  font-family: var(--caco3-font-family);
+  font-size: var(--caco3-font-size--1);
+  font-weight: var(--caco3-font-weight-medium);
+  color: var(--caco3-color-text-1);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  transition:
+    background-color var(--caco3-animation-timing),
+    color var(--caco3-animation-timing);
+}
+
+/* Remove the browser's default disclosure triangle */
+details > summary::-webkit-details-marker { display: none; }
+details > summary::marker              { display: none; }
+
+/* Chevron — exact Calcite chevron-down path, masked so color inherits */
+details > summary::after {
+  content: "";
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: 16px;
+  block-size: 16px;
+  background-color: var(--caco3-color-text-3);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m8 11.207-4-4V5.793l4 4 4-4v1.414z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  transform: rotate(-90deg);
+  transition: transform var(--caco3-animation-timing), background-color var(--caco3-animation-timing);
+}
+
+details[open] > summary::after {
+  transform: rotate(0deg);
+}
+
+details > summary:hover {
+  background-color: var(--caco3-color-foreground-2);
+  color: var(--caco3-color-text-1);
+}
+
+details > summary:hover::after {
+  background-color: var(--caco3-color-text-1);
+}
+
+details > summary:active {
+  background-color: var(--caco3-color-foreground-3);
+}
+
+details > summary:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: calc(var(--caco3-focus-offset) * -1);
+}
+
+/* Content area — everything inside details except summary */
+details > *:not(summary) {
+  padding-inline: var(--caco3-spacing-3);
+  padding-block: var(--caco3-spacing-3);
+  font-size: var(--caco3-font-size-0);
+  color: var(--caco3-color-text-2);
+  border-block-start: var(--caco3-border-width) solid var(--caco3-color-border-3);
+}
+
+details > p:last-child,
+details > div:last-child > p:last-child {
+  margin-block-end: 0;
+}
+
+
+/* ============================================================
+   Progress
+
+   Maps to calcite-progress.
+   Native <progress> element.
+
+   Determinate:   <progress value="60" max="100"></progress>
+   Indeterminate: <progress></progress>
+
+   Optional label: wrap in a <label> and put text after:
+     <label>
+       Uploading...
+       <progress value="40" max="100"></progress>
+     </label>
+   ============================================================ */
+
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  inline-size: 100%;
+  block-size: 2px;
+  border: none;
+  border-radius: 0;
+  margin-block-end: var(--caco3-spacing-4);
+  overflow: hidden;
+
+  /* Firefox — track and fill */
+  color: var(--caco3-color-brand);
+  background-color: var(--caco3-color-border-3);
+}
+
+/* WebKit/Blink track */
+progress::-webkit-progress-bar {
+  background-color: var(--caco3-color-border-3);
+}
+
+/* WebKit/Blink fill */
+progress::-webkit-progress-value {
+  background-color: var(--caco3-color-brand);
+}
+
+/* Firefox fill */
+progress::-moz-progress-bar {
+  background-color: var(--caco3-color-brand);
+}
+
+/* ---- Indeterminate — animated fill sweeps left to right ---- */
+
+@keyframes calcite-progress-indeterminate {
+  0%   { background-position: 200% center; }
+  100% { background-position: -100% center; }
+}
+
+progress:indeterminate {
+  background: linear-gradient(
+    to right,
+    var(--caco3-color-border-3) 0%,
+    var(--caco3-color-border-3) 30%,
+    var(--caco3-color-brand)    50%,
+    var(--caco3-color-border-3) 70%,
+    var(--caco3-color-border-3) 100%
+  );
+  background-size: 200% 100%;
+  animation: calcite-progress-indeterminate 2s linear infinite;
+}
+
+progress:indeterminate::-webkit-progress-bar {
+  background: transparent;
+}
+
+progress:indeterminate::-moz-progress-bar {
+  background: transparent;
+}
+
+
+/* ============================================================
+   Notice
+   ============================================================
+
+   Inline status notice. Maps to calcite-notice.
+   Use <aside data-kind="info|success|warning|danger">.
+
+   Static:      no close button
+   Dismissible: add <button onclick="this.closest('aside').remove()">
+
+   ============================================================ */
+
+aside[data-kind] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-block-end: var(--caco3-spacing-4);
+
+  border: var(--caco3-border-width) solid;
+  border-radius: var(--caco3-corner-radius-round);
+
+  font-family: var(--caco3-font-family);
+  font-size: var(--caco3-font-size-0);
+  color: var(--caco3-color-text-1);
+}
+
+aside[data-kind="brand"] {
+  background-color: color-mix(in srgb, var(--caco3-color-brand) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-brand);
+}
+aside[data-kind="info"] {
+  background-color: color-mix(in srgb, var(--caco3-color-status-info) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-status-info);
+}
+aside[data-kind="success"] {
+  background-color: color-mix(in srgb, var(--caco3-color-status-success) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-status-success);
+}
+aside[data-kind="warning"] {
+  background-color: color-mix(in srgb, var(--caco3-color-status-warning) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-status-warning);
+}
+aside[data-kind="danger"] {
+  background-color: color-mix(in srgb, var(--caco3-color-status-danger) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-status-danger);
+}
+aside[data-kind="neutral"] {
+  background-color: var(--caco3-color-foreground-1);
+  border-color: var(--caco3-color-border-1);
+}
+
+/* Icon */
+aside[data-kind] > i {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+aside[data-kind="brand"]   > i { color: var(--caco3-color-brand); }
+aside[data-kind="info"]    > i { color: var(--caco3-color-status-info); }
+aside[data-kind="success"] > i { color: var(--caco3-color-status-success); }
+aside[data-kind="warning"] > i { color: var(--caco3-color-status-warning); }
+aside[data-kind="danger"]  > i { color: var(--caco3-color-status-danger); }
+aside[data-kind="neutral"] > i { color: var(--caco3-color-text-1); }
+
+/* Body */
+aside[data-kind] > div {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+aside[data-kind] > div > strong {
+  display: block;
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-medium);
+  color: var(--caco3-color-text-1);
+  margin-block-end: 2px;
+}
+
+aside[data-kind] > div > p {
+  margin: 0;
+  font-size: var(--caco3-font-size--1);
+  color: var(--caco3-color-text-2);
+}
+
+/* Close button — reset all caco3 button styles */
+aside[data-kind] > button {
+  all: unset;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--caco3-color-text-3);
+  padding: 2px;
+  border-radius: 2px;
+  transition: color var(--caco3-animation-timing);
+}
+
+aside[data-kind] > button:hover {
+  color: var(--caco3-color-text-1);
+}
+
+aside[data-kind] > button:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: 1px;
+}
+
+
+/* ============================================================
+   Alerts  (caco3-alerts.js)
+   ============================================================
+
+   Toast notifications delivered by caco3-alerts.js.
+   Requires this stylesheet — the JS does not inject its own styles.
+
+   Variants via data-kind: info | success | warning | danger
+   ============================================================ */
+
+/* ---- Tray positioning ---- */
+
+.caco3-alert-tray {
+  position: fixed;
+  display: flex;
+  gap: 8px;
+  z-index: var(--caco3-z-index-modal);
+  pointer-events: none;
+}
+
+/* Bottom placements — stack newest at bottom */
+.caco3-alert-tray[data-placement="bottom-end"] {
+  flex-direction: column-reverse;
+  bottom: 1rem;
+  inset-inline-end: 1rem;
+}
+.caco3-alert-tray[data-placement="bottom-start"] {
+  flex-direction: column-reverse;
+  bottom: 1rem;
+  inset-inline-start: 1rem;
+}
+.caco3-alert-tray[data-placement="bottom-center"] {
+  flex-direction: column-reverse;
+  bottom: 1rem;
+  left: 50%;
+  translate: -50% 0;
+  align-items: center;
+}
+
+/* Top placements — stack newest at top */
+.caco3-alert-tray[data-placement="top-end"] {
+  flex-direction: column;
+  top: 1rem;
+  inset-inline-end: 1rem;
+}
+.caco3-alert-tray[data-placement="top-start"] {
+  flex-direction: column;
+  top: 1rem;
+  inset-inline-start: 1rem;
+}
+.caco3-alert-tray[data-placement="top-center"] {
+  flex-direction: column;
+  top: 1rem;
+  left: 50%;
+  translate: -50% 0;
+  align-items: center;
+}
+
+/* ---- Alert ---- */
+
+.caco3-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  min-inline-size: 280px;
+  max-inline-size: 420px;
+  pointer-events: all;
+
+  background-color: var(--caco3-color-foreground-1);
+  border: var(--caco3-border-width) solid var(--caco3-color-border-3);
+  border-block-start-width: 3px;
+  border-radius: var(--caco3-corner-radius-round);
+  box-shadow: var(--caco3-shadow-md);
+
+  font-family: var(--caco3-font-family);
+  font-size: var(--caco3-font-size-0);
+  color: var(--caco3-color-text-1);
+
+  opacity: 0;
+  translate: 0 8px;
+  transition:
+    opacity var(--caco3-animation-timing),
+    translate var(--caco3-animation-timing);
+}
+
+/* Top-placement alerts slide down instead of up */
+.caco3-alert-tray[data-placement^="top"] .caco3-alert {
+  translate: 0 -8px;
+}
+
+.caco3-alert--visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.caco3-alert--hiding {
+  opacity: 0;
+  translate: 0 8px;
+}
+
+.caco3-alert-tray[data-placement^="top"] .caco3-alert--hiding {
+  translate: 0 -8px;
+}
+
+.caco3-alert[data-kind="info"]    { border-block-start-color: var(--caco3-color-status-info); }
+.caco3-alert[data-kind="success"] { border-block-start-color: var(--caco3-color-status-success); }
+.caco3-alert[data-kind="warning"] { border-block-start-color: var(--caco3-color-status-warning); }
+.caco3-alert[data-kind="danger"]  { border-block-start-color: var(--caco3-color-status-danger); }
+
+.caco3-alert__icon {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.caco3-alert[data-kind="info"]    .caco3-alert__icon { color: var(--caco3-color-status-info); }
+.caco3-alert[data-kind="success"] .caco3-alert__icon { color: var(--caco3-color-status-success); }
+.caco3-alert[data-kind="warning"] .caco3-alert__icon { color: var(--caco3-color-status-warning); }
+.caco3-alert[data-kind="danger"]  .caco3-alert__icon { color: var(--caco3-color-status-danger); }
+
+.caco3-alert__body {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.caco3-alert__title {
+  margin: 0 0 2px;
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-medium);
+  color: var(--caco3-color-text-1);
+}
+
+.caco3-alert__message {
+  margin: 0;
+  font-size: var(--caco3-font-size--1);
+  color: var(--caco3-color-text-2);
+}
+
+/* Message-only: promote the title element to body weight/size */
+.caco3-alert__title:only-child {
+  font-weight: var(--caco3-font-weight-normal);
+}
+
+.caco3-alert__close {
+  all: unset;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--caco3-color-text-3);
+  padding: 2px;
+  border-radius: 2px;
+  transition: color var(--caco3-animation-timing);
+}
+
+.caco3-alert__close:hover {
+  color: var(--caco3-color-text-1);
+}
+
+.caco3-alert__close:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: 1px;
+}
+
+
+/* ============================================================
+   Grid  (caco3-grid.js)
+   ============================================================
+
+   Interactive data grid: sort, paginate, search, row selection.
+   Requires this stylesheet — the JS does not inject its own styles.
+
+   Usage: <table data-grid data-page-size="10" data-selectable>
+            <thead><tr><th data-sortable>…</th></tr></thead>
+          </table>
+   ============================================================ */
+
+/* ---- Layout ---- */
+
+.caco3-grid__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-block-end: 4px;
+}
+
+.caco3-grid__toolbar input[type="search"] {
+  flex: 1;
+  max-inline-size: 280px;
+  font-size: var(--caco3-font-size--1)!important;
+  margin-block-end: 0!important;
+  padding-bottom: 4px!important;
+  padding-top: 4px!important;  
+}
+
+.caco3-grid__info {
+  margin-inline-start: auto;
+  font-size: var(--caco3-font-size--1);
+  color: var(--caco3-color-text-3);
+  white-space: nowrap;
+}
+
+.caco3-grid__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block-start: 8px;
+}
+
+.caco3-grid__pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.caco3-grid__pagination button[data-appearance="transparent"] {
+  color: var(--caco3-color-text-3);
+}
+
+.caco3-grid__page-btn {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 28px;
+  block-size: 28px;
+  padding-inline: 4px;
+  font-size: var(--caco3-font-size--1);
+  color: var(--caco3-color-text-3);
+  transition: color var(--caco3-animation-timing), box-shadow var(--caco3-animation-timing);
+}
+
+.caco3-grid__page-btn:hover:not([aria-current]),
+.caco3-grid__page-btn:active:not([aria-current]) {
+  background-color: transparent;
+  color: var(--caco3-color-text-1);
+  box-shadow: 0 2px 0 var(--caco3-color-border-2);
+}
+
+.caco3-grid__page-btn[aria-current="page"] {
+  background-color: transparent;
+  color: var(--caco3-color-text-1);
+  font-weight: var(--caco3-font-weight-medium);
+  box-shadow: 0 2px 0 var(--caco3-color-brand);
+  cursor: default;
+}
+
+.caco3-grid__page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 28px;
+  block-size: 28px;
+  font-size: var(--caco3-font-size--1);
+  color: var(--caco3-color-text-3);
+}
+
+/* ---- Sortable column headers ---- */
+
+th.caco3-grid__sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  outline: none;
+}
+
+th.caco3-grid__sortable:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: calc(var(--caco3-focus-offset) * -1);
+}
+
+th.caco3-grid__sortable::after {
+  content: '';
+  display: inline-block;
+  inline-size: 10px;
+  block-size: 10px;
+  margin-inline-start: 5px;
+  vertical-align: middle;
+  background-color: var(--caco3-color-border-1);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m8 11.207-4-4V5.793l4 4 4-4v1.414z'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  rotate: 180deg;
+  transition: background-color var(--caco3-animation-timing), rotate var(--caco3-animation-timing);
+}
+
+th.caco3-grid__sortable[data-sort="asc"]::after {
+  background-color: var(--caco3-color-text-1);
+  rotate: 180deg;
+}
+
+th.caco3-grid__sortable[data-sort="desc"]::after {
+  background-color: var(--caco3-color-text-1);
+  rotate: 0deg;
+}
+
+/* ---- Checkbox column ---- */
+
+.caco3-grid__check-col,
+.caco3-grid__check-cell {
+  inline-size: 40px;
+  text-align: center;
+  padding-inline: 0;
+}
+
+/* ---- Selected row ---- */
+
+tbody tr.caco3-grid__row--selected > td {
+  background-color: color-mix(in srgb, var(--caco3-color-brand) 10%, var(--caco3-color-foreground-1));
+}
+
+/* ---- Empty state ---- */
+
+.caco3-grid__empty {
+  text-align: center;
+  color: var(--caco3-color-text-3);
+  font-style: italic;
+  padding-block: var(--caco3-spacing-4);
+}
+
+
+/* ============================================================
+   Tabs  (caco3-tabs.js)
+   ============================================================
+
+   Interactive tabs component.
+   Requires this stylesheet — the JS does not inject its own styles.
+
+   Usage:
+     <div data-tabs>
+       <div role="tablist" aria-label="…">
+         <button role="tab" aria-selected="true"  aria-controls="panel-1" id="tab-1">Tab 1</button>
+         <button role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">Tab 2</button>
+       </div>
+       <div role="tabpanel" id="panel-1" aria-labelledby="tab-1">…</div>
+       <div role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>…</div>
+     </div>
+   ============================================================ */
+
+/* ---- Tab list ---- */
+
+[data-tabs] > [role="tablist"] {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-block-end: 1px solid var(--caco3-color-border-2);
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- Tab buttons — reset all button styles then re-apply ---- */
+
+[data-tabs] > [role="tablist"] [role="tab"] {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-block: 10px;
+  padding-inline: 16px;
+  font-family: var(--caco3-font-family);
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-normal);
+  color: var(--caco3-color-text-1);
+  white-space: nowrap;
+  user-select: none;
+
+  /* Bottom indicator — overlaps the tablist border when active */
+  border-block-end: 3px solid transparent;
+  margin-block-end: -1px;
+
+  transition:
+    color var(--caco3-animation-timing),
+    border-color var(--caco3-animation-timing);
+}
+
+[data-tabs] > [role="tablist"] [role="tab"]:hover {
+  color: var(--caco3-color-brand);
+}
+
+[data-tabs] > [role="tablist"] [role="tab"][aria-selected="true"] {
+  color: var(--caco3-color-brand);
+  font-weight: var(--caco3-font-weight-medium);
+  border-block-end-color: var(--caco3-color-brand);
+}
+
+[data-tabs] > [role="tablist"] [role="tab"]:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: calc(var(--caco3-focus-offset) * -1);
+  border-radius: 2px;
+}
+
+[data-tabs] > [role="tablist"] [role="tab"]:disabled,
+[data-tabs] > [role="tablist"] [role="tab"][aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---- Tab panels ---- */
+
+[data-tabs] > [role="tabpanel"] {
+  padding-block: var(--caco3-spacing-4);
+}
+
+[data-tabs] > [role="tabpanel"][hidden] {
+  display: none;
+}
+
+
+/* ============================================================
+   Popover
+   ============================================================ */
+
+[data-popover] {
+  position: fixed;
+  z-index: var(--caco3-popover-z);
+  background: var(--caco3-popover-bg);
+  border: 1px solid var(--caco3-popover-border);
+  border-radius: var(--caco3-popover-radius);
+  box-shadow: var(--caco3-popover-shadow);
+}
+
+[data-popover][hidden] {
+  display: none;
+}
+
+
+/* ============================================================
+   Drawer
+   ============================================================ */
+
+/* Backdrop */
+[data-drawer-backdrop] {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--caco3-drawer-z) - 1);
+  background: var(--caco3-drawer-backdrop-color);
+  opacity: 0;
+  transition: opacity var(--caco3-animation-timing-slow);
+  pointer-events: none;
+}
+
+[data-drawer-backdrop][data-visible] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Drawer panel */
+[data-drawer] {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: var(--caco3-drawer-width);
+  max-width: 90vw;
+  z-index: var(--caco3-drawer-z);
+  background: var(--caco3-drawer-bg);
+  box-shadow: var(--caco3-drawer-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--caco3-animation-timing-slow);
+}
+
+[data-drawer][hidden] {
+  display: none;
+}
+
+[data-drawer][data-placement="end"],
+[data-drawer]:not([data-placement="start"]) {
+  right: 0;
+  border-left: 1px solid var(--caco3-drawer-border);
+  transform: translateX(100%);
+}
+
+[data-drawer][data-placement="start"] {
+  left: 0;
+  border-right: 1px solid var(--caco3-drawer-border);
+  transform: translateX(-100%);
+}
+
+[data-drawer][data-open] {
+  transform: translateX(0);
+}
+
+/* Header */
+[data-drawer-header] {
+  flex-shrink: 0;
+  height: var(--caco3-drawer-header-height);
+  display: flex;
+  align-items: center;
+  padding-inline: var(--caco3-spacing-4);
+  gap: var(--caco3-spacing-2);
+  border-bottom: 1px solid var(--caco3-color-border-3);
+}
+
+[data-drawer-title] {
+  flex: 1;
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-medium);
+  color: var(--caco3-color-text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Body */
+[data-drawer-body] {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--caco3-spacing-4);
+}
+
+/* Footer */
+[data-drawer-footer] {
+  flex-shrink: 0;
+  height: var(--caco3-drawer-footer-height);
+  display: flex;
+  align-items: center;
+  padding-inline: var(--caco3-spacing-4);
+  border-top: 1px solid var(--caco3-color-border-3);
+}
