@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reminda by Ope Ltd</title>
+  <link rel="stylesheet" href="assets/css/jkanban.min.css" />
+  <link rel="stylesheet" href="assets/css/caco3.css" />
+  <link rel="stylesheet" href="assets/css/phosphor.css" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <link rel="icon" type="image/png" href="assets/img/kanban.png">
+</head>
+
+<body>
+  <nav>
+    <a href="index.html">
+      Reminda
+      <small>Kanban for ArcGIS Online</small>
+    </a>
+    <ul>
+      <li><a href="#" id="name" aria-current="page">Loading...</a></li>
+      <li><a href="#" id="btnOpenCreateBoard">New Board</a></li>
+      <li><a href="#" id="btnOpenLoadBoard">Load Board</a></li>
+      <li><a href="#" onclick="exportAllTasksCSV(); return false;">Export</a></li>
+    </ul>
+    <button id="mode-toggle" data-appearance="transparent" data-icon-only aria-label="Toggle dark mode" title="Switch to dark mode">
+      <i class="ph ph-moon" aria-hidden="true"></i>
+    </button>
+  </nav>
+
+  <div id="myKanban"></div>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/jkanban.min.js"></script>
+  <script src="assets/js/caco3-alerts.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/create.js"></script>
+
+  <dialog id="dialogAddItem">
+    <header>
+      <h2>Add Item</h2>
+      <button type="button" id="btnCancelAddItem" aria-label="Close" data-appearance="transparent" data-icon-only><i class="ph ph-x" aria-hidden="true"></i></button>
+    </header>
+    <div>
+      <label for="inpTitle_AddDialog">Title</label>
+      <input type="text" id="inpTitle_AddDialog" placeholder="Task title" autofocus>
+      <label for="inpDescription_AddDialog">Description</label>
+      <textarea id="inpDescription_AddDialog" rows="4" style="resize:vertical;"></textarea>
+      <label for="selPriority_AddDialog">Priority</label>
+      <select id="selPriority_AddDialog" style="width:100%;"></select>
+    </div>
+    <footer>
+      <button type="button" id="btnSaveAddItem">Add</button>
+    </footer>
+  </dialog>
+
+  <dialog id="dialogCreateBoard">
+    <header>
+      <h2>New Board</h2>
+      <button type="button" id="btnCancelCreateBoard" aria-label="Close" data-appearance="transparent" data-icon-only><i class="ph ph-x" aria-hidden="true"></i></button>
+    </header>
+    <div>
+      <label for="boardname">Board Name</label>
+      <input type="text" id="boardname" placeholder="Board Name">
+    </div>
+    <div id="createSpinner" style="display:none; text-align:center;">
+      <progress></progress>
+      <p>Creating board...</p>
+    </div>
+    <footer>
+      <button type="button" id="btnCreateBoard">Create Board</button>
+    </footer>
+  </dialog>
+
+  <dialog id="dialogLoadBoard">
+    <header>
+      <h2>Load Board</h2>
+      <button type="button" id="btnCancelLoadBoard" aria-label="Close" data-appearance="transparent" data-icon-only><i class="ph ph-x" aria-hidden="true"></i></button>
+    </header>
+    <div>
+      <label for="boardsDropdown">Board</label>
+      <select id="boardsDropdown"><option>Loading...</option></select>
+    </div>
+    <footer>
+      <button type="button" id="btnLoadBoard">Load</button>
+    </footer>
+  </dialog>
+
+  <dialog id="dialogEditTitle" style="width:min(680px,90vw);">
+    <header>
+      <h2>Edit Task <span id="txtId_Dialog"></span></h2>
+      <button type="button" aria-label="Close" id="btnCancel_Dialog" data-appearance="transparent" data-icon-only><i class="ph ph-x" aria-hidden="true"></i></button>
+    </header>
+    <div>
+      <label for="inpTitle_Dialog">Title</label>
+      <input type="text" autofocus id="inpTitle_Dialog">
+      <label for="selPriority_Dialog">Priority</label>
+      <select id="selPriority_Dialog" style="width:100%;"></select>
+      <label for="inpDescription_Dialog">Description</label>
+      <textarea style="resize: vertical;" rows="4" id="inpDescription_Dialog"></textarea>
+      <label for="inpComments_Dialog">Comments</label>
+      <textarea style="resize: vertical;" rows="4" id="inpComments_Dialog"></textarea>
+    </div>
+    <hr>
+    <div>
+      <p><strong>Attachments</strong></p>
+      <div id="attachmentsList_Dialog"></div>
+      <div class="attachment-upload">
+        <input type="file" id="fileInput_Dialog" multiple>
+        <button type="button" id="btnUpload_Dialog" data-appearance="outline"><i class="ph ph-upload-simple" aria-hidden="true"></i> Upload</button>
+      </div>
+    </div>
+    <footer>
+      <button type="button" id="btnSave_Dialog">Save</button>
+    </footer>
+  </dialog>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const btn  = document.getElementById('mode-toggle');
+      const icon = btn.querySelector('i');
+
+      function isDark() {
+        const mode = html.dataset.mode;
+        if (mode === 'dark')  return true;
+        if (mode === 'light') return false;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+
+      function applyMode(dark) {
+        html.dataset.mode = dark ? 'dark' : 'light';
+        icon.className    = dark ? 'ph ph-sun' : 'ph ph-moon';
+        btn.title         = dark ? 'Switch to light mode' : 'Switch to dark mode';
+        try { localStorage.setItem('caco3-mode', dark ? 'dark' : 'light'); } catch (_) {}
+      }
+
+      const saved = (() => { try { return localStorage.getItem('caco3-mode'); } catch (_) { return null; } })();
+      applyMode(saved ? saved === 'dark' : isDark());
+      btn.addEventListener('click', () => applyMode(!isDark()));
+    })();
+  </script>
+
+</body>
+
+</html>
