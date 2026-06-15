@@ -1,0 +1,162 @@
+/* Remove caco3's body padding so nav spans edge-to-edge */
+body {
+  padding: 0;
+}
+
+/* Restore content padding for non-board pages */
+main {
+  padding: var(--caco3-spacing-6);
+}
+
+/* Kanban board top spacing */
+#myKanban {
+  padding-top: var(--caco3-spacing-6);
+}
+
+
+/* jKanban dark-mode-aware colours */
+.kanban-board {
+  background: var(--caco3-color-surface-3);
+}
+.kanban-item {
+  background: var(--caco3-color-foreground-1);
+  color: var(--caco3-color-text-1);
+}
+
+/* jKanban "Add Item" button */
+.kanban-board footer {
+  padding: 0 20px 15px;
+}
+
+/* Kanban column header background colours */
+.title {
+  background: var(--caco3-color-brand);
+  color: #fff;
+}
+
+.closed {
+  background: var(--caco3-color-brand-press);
+  color: #fff;
+}
+
+/* Form background in create page */
+form {
+  background-color: var(--caco3-color-surface-3);
+  padding: var(--caco3-spacing-4);
+}
+
+/* Card header: task ID + priority icon */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-bottom: 0.2em;
+}
+
+.card-id {
+  font-weight: bold;
+  color: var(--caco3-color-text-2);
+  font-size: var(--caco3-font-size-0);
+}
+
+.card-title {
+  display: block;
+}
+
+.card-priority-low    { color: var(--caco3-color-status-success); --ph-color: var(--caco3-color-status-success); }
+.card-priority-medium { color: var(--caco3-color-status-warning); --ph-color: var(--caco3-color-status-warning); }
+.card-priority-high   { color: var(--caco3-color-status-danger);  --ph-color: var(--caco3-color-status-danger); }
+
+/* Strike through cards in the Closed column */
+[data-id="Closed"] .kanban-item .card-id,
+[data-id="Closed"] .kanban-item .card-title {
+  text-decoration: line-through;
+  color: #aaa;
+}
+[data-id="Closed"] .kanban-item .card-priority {
+  color: #aaa;
+}
+
+/* Attachment list */
+.attachment-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--caco3-color-border-3);
+}
+
+.attachment-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachment-size {
+  color: var(--caco3-color-text-3);
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.attachment-delete {
+  background-color: var(--caco3-color-status-danger);
+  color: #fff;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.8em;
+  min-width: auto;
+  width: auto;
+}
+
+.attachment-upload {
+  margin-top: 0.5rem;
+}
+
+#attachmentsList_Dialog em {
+  color: var(--caco3-color-text-3);
+  font-size: 0.9em;
+}
+
+/* Swimlane copy button */
+.swimlane-copy-btn {
+  background: none;
+  border: none;
+  padding: 0 0 0 0.5em;
+  margin: 0;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.swimlane-copy-btn:hover {
+  background: none;
+  font-weight: bold;
+}
+
+/* Board list (create page) */
+.board-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--caco3-color-border-3);
+}
+
+.board-link {
+  font-size: 1.1em;
+}
+
+.board-date {
+  color: var(--caco3-color-text-3);
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+#boardsList em {
+  color: var(--caco3-color-text-3);
+  font-size: 0.9em;
+}
