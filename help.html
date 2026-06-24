@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Help — Reminda</title>
+  <link rel="stylesheet" href="assets/css/caco3.css" />
+  <link rel="stylesheet" href="assets/css/phosphor.css" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <link rel="icon" type="image/png" href="assets/img/kanban.png">
+</head>
+
+<body>
+  <nav>
+    <a href="index.html">
+      Reminda
+      <small>Kanban for ArcGIS Online</small>
+    </a>
+    <button id="mode-toggle" data-appearance="transparent" data-icon-only aria-label="Toggle dark mode" title="Switch to dark mode">
+      <i class="ph ph-moon" aria-hidden="true"></i>
+    </button>
+  </nav>
+
+  <main>
+    <section>
+      <h3>Getting Started</h3>
+      <p>Reminda uses your ArcGIS Online account to store boards and tasks. Any ArcGIS Online account can sign in to <strong>reminda.app</strong> — no separate registration is needed.</p>
+      <p>Creating a new board provisions a hosted Feature Service in your ArcGIS Online content, which requires a <strong>Creator</strong> (or higher) license. If your account is a Viewer or Editor, you can still open and work on boards that someone else has created and shared with you.</p>
+      <ol>
+        <li>Go to <a href="signin.html">Sign In</a> and authenticate with your ArcGIS Online account.</li>
+        <li>If you have a Creator license, click <strong>New Board</strong> to create your first board.</li>
+        <li>If a board has been shared with you, use <strong>Load Board</strong> on the board selection page to open it.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>Boards</h3>
+      <p>Each Reminda board is a hosted Feature Service in your ArcGIS Online account. Boards are created and loaded from the <a href="create.html">board selection page</a>.</p>
+      <table>
+        <thead>
+          <tr><th>Action</th><th>How</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Create a board</td><td>Click <strong>New Board</strong> in the nav, enter a name, and click <strong>Create Board</strong></td></tr>
+          <tr><td>Load a board</td><td>Select a board from the <strong>Load an existing board</strong> dropdown and click <strong>Load Board</strong></td></tr>
+          <tr><td>Switch boards</td><td>Click the current board name in the nav bar, then use <strong>Load Board</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>Tasks</h3>
+      <table>
+        <thead>
+          <tr><th>Action</th><th>How</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Add a task</td><td>Click <strong>Add Item</strong> at the bottom of any column. Enter a title, optional description and priority, then click <strong>Add</strong></td></tr>
+          <tr><td>Edit a task</td><td>Click on any card to open the edit dialog. You can update the title, priority, description, and comments</td></tr>
+          <tr><td>Move a task</td><td>Drag a card to a different column — the status is saved automatically</td></tr>
+          <tr><td>Set priority</td><td>Choose Low, Medium, or High in the Add or Edit dialog. A colour-coded icon appears on the card</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>Attachments</h3>
+      <p>Files can be attached to any task and are stored in ArcGIS Online alongside the task data.</p>
+      <table>
+        <thead>
+          <tr><th>Action</th><th>How</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Upload a file</td><td>Open a task → scroll to <strong>Attachments</strong> → choose file(s) → click <strong>Upload</strong></td></tr>
+          <tr><td>Download a file</td><td>Click the filename link in the Attachments section</td></tr>
+          <tr><td>Delete a file</td><td>Click <strong>Delete</strong> next to the attachment</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>Export and copy</h3>
+      <table>
+        <thead>
+          <tr><th>Action</th><th>How</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Export all tasks</td><td>Click <strong>Export</strong> in the nav to download a CSV of all tasks across all columns</td></tr>
+          <tr><td>Copy a column</td><td>Click the <i class="ph ph-copy" aria-hidden="true"></i> icon in a column header to copy its tasks to the clipboard as tab-delimited text</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>Custom task ID prefix</h3>
+      <p>By default task IDs are prefixed with <code>T</code> (e.g. <code>T-42</code>). To use a custom prefix, add <code>prefix=XYZ</code> to the layer's <strong>Copyright Text</strong> field in ArcGIS Online. For example, <code>prefix=ABC</code> produces IDs like <code>ABC-T-1</code>.</p>
+    </section>
+
+    <section>
+      <h3>Dark mode</h3>
+      <p>Click the <i class="ph ph-moon" aria-hidden="true"></i> / <i class="ph ph-sun" aria-hidden="true"></i> button in the top-right corner to toggle between light and dark mode. Your preference is saved and applied across all pages.</p>
+    </section>
+  </main>
+
+  <script src="assets/js/darkmode.js"></script>
+
+</body>
+</html>
