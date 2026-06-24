@@ -249,38 +249,23 @@ async function createKanbanFeatureService(event) {
         window.location.href = basePath + "/index.html?layer=" + serviceUrl + "/0";
     } else {
         console.error("Failed to add table:", tableResult);
+        caco3Alerts.show('Error', 'Failed to create board. Please try again.', { kind: 'danger' });
         btn.disabled = false;
         btn.textContent = "Create Board";
         spinner.style.display = "none";
     }
 }
 
-// Searches the portal for all Feature Services tagged "kanban" and populates
-// the nav "Load Board" dropdown with links to each board.
-// Called via DOMContentLoaded to ensure the dropdown element exists in the DOM.
+// Searches the portal for boards tagged "kanban" and populates the load dropdown.
 async function loadExistingBoards() {
     const dropdown = document.getElementById("boardsDropdown");
-
-    const searchUrl = `https://www.arcgis.com/sharing/rest/search`;
-    const query = `tags:kanban AND type:"Feature Service"`;
-
     try {
-        const resp = await fetch(searchUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `f=json&token=${authObj.access_token}&filter=${encodeURIComponent(query)}&num=100`
-        });
-
-        const data = await resp.json();
-        const results = data.results || [];
-
+        const results = await searchKanbanBoards(authObj.access_token);
         dropdown.innerHTML = "";
-
         if (results.length === 0) {
             dropdown.innerHTML = "<option disabled>No boards found</option>";
             return;
         }
-
         for (const item of results) {
             const option = document.createElement("option");
             option.value = basePath + "/index.html?layer=" + item.url + "/0";
@@ -289,19 +274,19 @@ async function loadExistingBoards() {
         }
     } catch (e) {
         console.error("Failed to load boards:", e);
+        caco3Alerts.show('Error', 'Could not load boards. Please try again.', { kind: 'danger' });
     }
 }
 
 // Page init — only runs on create.html (index.html has #myKanban; create.html does not)
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     if (document.getElementById("myKanban")) return;
 
-    // Validate auth and load the board list for the nav dropdown
     if (!window.localStorage) sendToLogin();
     const authObjItem = window.localStorage.getItem(localStorageKey);
     if (!authObjItem) sendToLogin();
     authObj = JSON.parse(authObjItem);
-    validateToken(authObj);
+    await validateToken(authObj);
 
     loadExistingBoards();
     document.getElementById("btnLoadBoard").onclick = () => { const url = document.getElementById("boardsDropdown").value; if (url) window.location.href = url; };
