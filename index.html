@@ -23,12 +23,17 @@
       <li><a href="#" id="btnOpenCreateBoard">New Board</a></li>
       <li><a href="#" id="btnOpenLoadBoard">Load Board</a></li>
       <li><a href="#" onclick="exportAllTasksCSV(); return false;">Export</a></li>
+      <li><a href="help.html" target="_blank">Help</a></li>
     </ul>
+    <i id="syncSpinner" class="ph ph-spinner" aria-hidden="true" title="Syncing..."></i>
     <button id="mode-toggle" data-appearance="transparent" data-icon-only aria-label="Toggle dark mode" title="Switch to dark mode">
       <i class="ph ph-moon" aria-hidden="true"></i>
     </button>
   </nav>
 
+  <div id="kanban-toolbar">
+    <input type="search" id="taskSearch" placeholder="Filter tasks..." autocomplete="off">
+  </div>
   <div id="myKanban"></div>
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/jkanban.min.js"></script>
@@ -115,31 +120,7 @@
     </footer>
   </dialog>
 
-  <script>
-    (function () {
-      const html = document.documentElement;
-      const btn  = document.getElementById('mode-toggle');
-      const icon = btn.querySelector('i');
-
-      function isDark() {
-        const mode = html.dataset.mode;
-        if (mode === 'dark')  return true;
-        if (mode === 'light') return false;
-        return window.matchMedia('(prefers-color-scheme: dark)').matches;
-      }
-
-      function applyMode(dark) {
-        html.dataset.mode = dark ? 'dark' : 'light';
-        icon.className    = dark ? 'ph ph-sun' : 'ph ph-moon';
-        btn.title         = dark ? 'Switch to light mode' : 'Switch to dark mode';
-        try { localStorage.setItem('caco3-mode', dark ? 'dark' : 'light'); } catch (_) {}
-      }
-
-      const saved = (() => { try { return localStorage.getItem('caco3-mode'); } catch (_) { return null; } })();
-      applyMode(saved ? saved === 'dark' : isDark());
-      btn.addEventListener('click', () => applyMode(!isDark()));
-    })();
-  </script>
+  <script src="assets/js/darkmode.js"></script>
 
 </body>
 
