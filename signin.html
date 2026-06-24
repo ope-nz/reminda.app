@@ -12,19 +12,16 @@
 <body style="overflow-y:hidden;overflow-x:hidden;">
     <div id="signin" style="width:100vw; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem;">
         <i class="ph ph-kanban" aria-hidden="true" style="font-size:100px;"></i>
-        <h1>Reminda by Ope Ltd</h1>
-        <h2>Please sign in</h2>
+        <h1>Reminda</h1>
+        <h3>Kanban for ArcGIS Online</h3>
+        <p>by Ope Ltd</p>
+        <p></p>
         <button id="signInBtn"><i class="ph ph-sign-in" aria-hidden="true"></i> Sign In</button>
+        <button data-icon-only="" data-appearance="transparent" title="Help" onclick="window.location.href='help.html'"><i class="ph ph-question" aria-hidden="true"></i></button>
     </div>
     <script>
         document.getElementById('signInBtn').addEventListener('click', startSignIn);
-        (function () {
-            try {
-                const saved = localStorage.getItem('caco3-mode');
-                const dark  = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.dataset.mode = dark ? 'dark' : 'light';
-            } catch (_) {}
-        })();
     </script>
+    <script src="assets/js/darkmode.js"></script>
 </body>
 </html>
