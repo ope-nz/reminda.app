@@ -214,12 +214,7 @@ async function initialize() {
         const now = Date.now();
         if (now - lastFocusPoll < 2000) return; // debounce: ignore if polled within 2s
         lastFocusPoll = now;
-        showSyncSpinner();
-        try {
-            await pollForUpdates();
-        } finally {
-            hideSyncSpinner();
-        }
+        await pollForUpdates();
     }
     document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "visible") pollOnFocus();
@@ -714,28 +709,18 @@ async function pollForUpdates() {
     }
 }
 
-function showSyncSpinner() {
-    document.getElementById('syncSpinner')?.classList.add('active');
-}
-
-function hideSyncSpinner() {
-    document.getElementById('syncSpinner')?.classList.remove('active');
-}
-
 // Starts the background polling loop. Skips a tick if the previous poll is still running.
 function startPolling(intervalMs = 30000) {
     let running = false;
     setInterval(async () => {
         if (running) return; // skip if previous poll hasn't finished
         running = true;
-        showSyncSpinner();
         try {
             await pollForUpdates();
         } catch (e) {
             console.error("Poll error:", e);
         } finally {
             running = false;
-            hideSyncSpinner();
         }
     }, intervalMs);
 }
