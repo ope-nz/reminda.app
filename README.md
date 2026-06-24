@@ -77,9 +77,10 @@ You can set a custom task ID prefix by adding `prefix=XYZ` to the layer's **Copy
 ```
 reminda/
 ├── index.html               — Kanban board page
-├── create.html              — Board selection page (redirects to index after load)
+├── create.html              — Load or create a board
 ├── signin.html              — Login page
 ├── redirect.html            — OAuth2 redirect handler
+├── help.html                — In-app help
 └── assets/
     ├── css/
     │   ├── caco3.css        — Base CSS framework (CaCO3, Calcite-inspired)
@@ -96,7 +97,8 @@ reminda/
     │   ├── phosphor.woff2   — Phosphor icon font (regular)
     │   └── phosphor.woff
     └── img/
-        └── kanban.png       — Favicon
+        ├── kanban.png       — Favicon
+        └── kanban.svg       — App logo
 ```
 
 ## How it works
