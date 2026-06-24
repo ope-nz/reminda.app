@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/phosphor.css" />
     <link rel="stylesheet" href="assets/css/app.css" />
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/caco3-alerts.js"></script>
     <script src="assets/js/create.js"></script>
     <link rel="icon" type="image/png" href="assets/img/kanban.png">
 </head>
@@ -17,6 +18,9 @@
             Reminda
             <small>Kanban for ArcGIS Online</small>
         </a>
+        <button onclick="window.location.href='help.html'" data-appearance="transparent" data-icon-only aria-label="Help" title="Help">
+            <i class="ph ph-question" aria-hidden="true"></i>
+        </button>
         <button id="mode-toggle" data-appearance="transparent" data-icon-only aria-label="Toggle dark mode" title="Switch to dark mode">
             <i class="ph ph-moon" aria-hidden="true"></i>
         </button>
@@ -26,7 +30,7 @@
         <section>
             <form onsubmit="return false;">
                 <header>
-                    <h2>Load an existing board</h2>
+                    <h3>Load an existing board</h3>
                 </header>
                 <label for="boardsDropdown">Board</label>
                 <select id="boardsDropdown"><option>Loading...</option></select>
@@ -36,7 +40,7 @@
         <section>
             <form onsubmit="return false;">
                 <header>
-                    <h2>Create a new Kanban board</h2>
+                    <h3>Create a new Kanban board</h3>
                 </header>
                 <label for="boardname">Board Name</label>
                 <input type="text" id="boardname" placeholder="Board Name">
@@ -49,31 +53,7 @@
         </section>
     </main>
 
-    <script>
-        (function () {
-            const html = document.documentElement;
-            const btn  = document.getElementById('mode-toggle');
-            const icon = btn.querySelector('i');
-
-            function isDark() {
-                const mode = html.dataset.mode;
-                if (mode === 'dark')  return true;
-                if (mode === 'light') return false;
-                return window.matchMedia('(prefers-color-scheme: dark)').matches;
-            }
-
-            function applyMode(dark) {
-                html.dataset.mode = dark ? 'dark' : 'light';
-                icon.className    = dark ? 'ph ph-sun' : 'ph ph-moon';
-                btn.title         = dark ? 'Switch to light mode' : 'Switch to dark mode';
-                try { localStorage.setItem('caco3-mode', dark ? 'dark' : 'light'); } catch (_) {}
-            }
-
-            const saved = (() => { try { return localStorage.getItem('caco3-mode'); } catch (_) { return null; } })();
-            applyMode(saved ? saved === 'dark' : isDark());
-            btn.addEventListener('click', () => applyMode(!isDark()));
-        })();
-    </script>
+    <script src="assets/js/darkmode.js"></script>
 
 </body>
 </html>
