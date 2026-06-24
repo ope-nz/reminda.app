@@ -10,6 +10,8 @@ let authObj = null;      // OAuth2 token object, loaded from localStorage by val
 let initialized = false; // Guards against double-initialization on page load
 let addItemBoardId = null; // Tracks which column the add-item dialog was opened from
 const knownItems = new Map(); // id → last-seen server attributes; used to detect remote changes during polling
+let pollFailCount = 0;   // Consecutive poll failures; triggers a warning banner after 2
+let pollFailAlert = null; // Reference to the active sync-failure alert so it can be dismissed
 
 /////////////////////////////
 // App Starts Here
@@ -20,8 +22,6 @@ const knownItems = new Map(); // id → last-seen server attributes; used to det
 async function initialize() {
     const params = new URLSearchParams(window.location.search);
     layer = params.get("layer");
-
-    console.log(layer);
 
     // Redirect to the create page if no layer was specified
     if (!layer) window.location.href = basePath + "/create.html";
@@ -35,7 +35,6 @@ async function initialize() {
 
     // Board columns come from the coded domain values on the "status" field
     let board_ids = getBoards()
-    console.log(board_ids);
 
     // Optionally prepend a custom prefix to task IDs (set in layer description as prefix=ABC)
     let extra_prefix = getPrefix();
@@ -43,8 +42,6 @@ async function initialize() {
 
     // Fetch all non-Closed tasks from the feature service
     let all_items = await getItems()
-
-    console.log(all_items);
 
     // Seed the change-detection map with the initial server state
     for (const item of all_items) {
@@ -81,9 +78,7 @@ async function initialize() {
         click: function (el) {
             showEditForm(el);
         },
-        context: function (el, e) {
-            console.log("Trigger on all items right-click!");
-        },
+        context: function (el, e) {},
         // Persist the new column (status) after a card is dragged
         dragendEl: function (el) {
             handleDragEnd(el);
@@ -194,6 +189,19 @@ async function initialize() {
 
     addSwimlaneCopyIcons(); // Inject clipboard icons into each column header
 
+    // Wire up task search/filter
+    const searchInput = document.getElementById("taskSearch");
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+            const q = searchInput.value.toLowerCase();
+            for (const item of document.querySelectorAll('.kanban-item')) {
+                const title = (item.querySelector('.card-title')?.textContent ?? '').toLowerCase();
+                const id = (item.dataset.eid ?? '').toLowerCase();
+                item.style.display = (!q || title.includes(q) || id.includes(q)) ? '' : 'none';
+            }
+        });
+    }
+
     startPolling(30000); // Check for remote changes every 30 seconds
 
     // Sync immediately when the tab or window regains focus, unless the edit dialog is open.
@@ -201,12 +209,17 @@ async function initialize() {
     // window.focus covers switching from another app/window without changing tabs.
     // The debounce prevents a double-poll when both events fire at the same time.
     let lastFocusPoll = 0;
-    function pollOnFocus() {
+    async function pollOnFocus() {
         if (document.getElementById("dialogEditTitle").open) return;
         const now = Date.now();
         if (now - lastFocusPoll < 2000) return; // debounce: ignore if polled within 2s
         lastFocusPoll = now;
-        pollForUpdates();
+        showSyncSpinner();
+        try {
+            await pollForUpdates();
+        } finally {
+            hideSyncSpinner();
+        }
     }
     document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "visible") pollOnFocus();
@@ -240,19 +253,8 @@ async function getName() {
 async function loadNavBoards() {
     const dropdown = document.getElementById("boardsDropdown");
     if (!dropdown) return;
-
-    const searchUrl = `https://www.arcgis.com/sharing/rest/search`;
-    const query = `tags:kanban AND type:"Feature Service"`;
-
     try {
-        const resp = await fetch(searchUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `f=json&token=${authObj.access_token}&filter=${encodeURIComponent(query)}&num=100`
-        });
-        const data = await resp.json();
-        const results = data.results || [];
-
+        const results = await searchKanbanBoards(authObj.access_token);
         dropdown.innerHTML = "";
         if (results.length === 0) {
             dropdown.innerHTML = "<option disabled>No boards found</option>";
@@ -404,6 +406,12 @@ async function saveEditForm(){
     document.getElementById("dialogEditTitle").close();
 }
 
+// Sorts task IDs numerically by their trailing number (e.g. T-3 before T-10).
+function compareTaskIds(a, b) {
+    const num = s => parseInt(s?.match(/(\d+)$/)?.[1] ?? '0', 10);
+    return num(a) - num(b);
+}
+
 function escapeHtml(str) {
     if (!str) return '';
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -486,6 +494,11 @@ async function addRecord(attributes) {
 
     if (isAuthError(data)) return null;
     if (!data.addResults) { console.error("addRecord failed:", data.error); return null; }
+
+    if (!data.addResults[0].success) {
+        caco3Alerts.show('Error', 'Failed to add task. Please try again.', { kind: 'danger' });
+        return null;
+    }
 
     if (data.addResults[0].success) {
         let result = data.addResults[0];
@@ -595,17 +608,19 @@ async function renderAttachments(objectId) {
 
 // Saves changes to an existing feature (task) in the ArcGIS feature service.
 async function updateRecord(attributes) {
-    const response = await fetch(`${layer}/updateFeatures`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `f=json&token=${authObj.access_token}&features=[{"attributes":${JSON.stringify(attributes)}}]`
-    })
-
-    const data = await response.json()
-
-    console.log(data);
+    try {
+        const response = await fetch(`${layer}/updateFeatures`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `f=json&token=${authObj.access_token}&features=[{"attributes":${JSON.stringify(attributes)}}]`
+        });
+        const data = await response.json();
+        if (isAuthError(data)) return;
+        if (data.error) caco3Alerts.show('Save failed', data.error.message || 'Could not save changes.', { kind: 'danger' });
+    } catch (e) {
+        console.error("updateRecord failed:", e);
+        caco3Alerts.show('Save failed', 'Could not reach the server.', { kind: 'danger' });
+    }
 }
 
 // Returns true and redirects to login if the ArcGIS response carries an auth error (498/499).
@@ -635,10 +650,16 @@ async function pollForUpdates() {
         const response = await fetch(`${layer}/query?token=${authObj.access_token}&outFields=*&where=1=1&f=json&orderByFields=id`);
         const data = await response.json();
         if (isAuthError(data)) return;
-        if (data.error) { console.error("Poll API error:", data.error); return; }
+        if (data.error) { console.error("Poll API error:", data.error); throw new Error(data.error.message); }
         serverItems = data.features.map(f => f.attributes);
+        // Poll succeeded — clear any failure banner
+        pollFailCount = 0;
+        if (pollFailAlert) { caco3Alerts.dismiss(pollFailAlert); pollFailAlert = null; }
     } catch (e) {
-        console.error("Poll failed:", e);
+        pollFailCount++;
+        if (pollFailCount >= 2 && !pollFailAlert) {
+            pollFailAlert = caco3Alerts.show('Sync paused', 'Could not reach the server. Changes may not be up to date.', { kind: 'warning', duration: 0 });
+        }
         return;
     }
 
@@ -693,42 +714,59 @@ async function pollForUpdates() {
     }
 }
 
+function showSyncSpinner() {
+    document.getElementById('syncSpinner')?.classList.add('active');
+}
+
+function hideSyncSpinner() {
+    document.getElementById('syncSpinner')?.classList.remove('active');
+}
+
 // Starts the background polling loop. Skips a tick if the previous poll is still running.
 function startPolling(intervalMs = 30000) {
     let running = false;
     setInterval(async () => {
         if (running) return; // skip if previous poll hasn't finished
         running = true;
+        showSyncSpinner();
         try {
             await pollForUpdates();
         } catch (e) {
             console.error("Poll error:", e);
         } finally {
             running = false;
+            hideSyncSpinner();
         }
     }, intervalMs);
 }
 
 // Fetches all tasks (including Closed) and downloads them as a CSV file.
 async function exportAllTasksCSV() {
-    const response = await fetch(`${layer}/query?token=${authObj.access_token}&outFields=id,title,status&where=1=1&f=json&orderByFields=id`);
-    const data = await response.json();
-    const items = data.features.map(f => f.attributes);
+    try {
+        const response = await fetch(`${layer}/query?token=${authObj.access_token}&outFields=id,title,status&where=1=1&f=json&orderByFields=id`);
+        const data = await response.json();
+        if (isAuthError(data)) return;
+        if (data.error) throw new Error(data.error.message);
+        const items = data.features.map(f => f.attributes).sort((a, b) => compareTaskIds(a.id, b.id));
 
-    const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const rows = [['id', 'title', 'status'].join(',')];
-    for (const item of items) {
-        rows.push([escape(item.id), escape(item.title), escape(item.status)].join(','));
+        const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+        const rows = [['id', 'title', 'status'].join(',')];
+        for (const item of items) {
+            rows.push([escape(item.id), escape(item.title), escape(item.status)].join(','));
+        }
+
+        const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'tasks.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+        caco3Alerts.show('Exported', `${items.length} tasks downloaded as tasks.csv`, { kind: 'success' });
+    } catch (e) {
+        console.error("Export failed:", e);
+        caco3Alerts.show('Export failed', 'Could not download tasks. Please try again.', { kind: 'danger' });
     }
-
-    const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'tasks.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-    caco3Alerts.show('Exported', `${items.length} tasks downloaded as tasks.csv`, { kind: 'success' });
 }
 
 // Adds a small clipboard icon button to each swimlane header after jKanban renders.
@@ -756,7 +794,8 @@ function copySwimlaneTasks(boardId, btn) {
     const board = document.querySelector(`.kanban-board[data-id="${CSS.escape(boardId)}"]`);
     if (!board) return;
 
-    const items = board.querySelectorAll('.kanban-item');
+    const items = [...board.querySelectorAll('.kanban-item')]
+        .sort((a, b) => compareTaskIds(a.dataset.eid, b.dataset.eid));
     const rows = [['id', 'title', 'status'].join('\t')];
     for (const item of items) {
         const id = item.dataset.eid ?? '';
@@ -772,18 +811,12 @@ function copySwimlaneTasks(boardId, btn) {
 // Checks localStorage for a valid auth token and redirects to login if missing.
 // On first run, kicks off initialize() and starts a periodic token refresh check.
 function validateLogin() {
-    console.log("validateLogin");
     if (!window.localStorage) sendToLogin();
+    const authObjItem = window.localStorage.getItem(localStorageKey);
+    if (!authObjItem) sendToLogin();
+    authObj = JSON.parse(authObjItem);
 
-    if (window.localStorage) {
-        let authObjItem = window.localStorage.getItem(localStorageKey);
-        if (!authObjItem) sendToLogin();
-        authObj = JSON.parse(authObjItem);
-    }
-
-    console.log("User is authenticated")
-
-    if (!initialized){
+    if (!initialized) {
         initialize();
         setInterval(() => validateToken(authObj), 60000);
     }
