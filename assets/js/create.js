@@ -266,6 +266,7 @@ async function loadExistingBoards() {
             dropdown.innerHTML = "<option disabled>No boards found</option>";
             return;
         }
+        results.sort((a, b) => a.title.localeCompare(b.title));
         for (const item of results) {
             const option = document.createElement("option");
             option.value = basePath + "/index.html?layer=" + item.url + "/0";
