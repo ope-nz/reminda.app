@@ -60,5 +60,9 @@ async function searchKanbanBoards(token) {
         body: `f=json&token=${token}&filter=${encodeURIComponent('tags:kanban AND type:"Feature Service"')}&num=100`
     });
     const data = await resp.json();
-    return data.results || [];
+    const results = data.results || [];
+    // Sort alphabetically by title so both load-board dropdowns list boards
+    // in a predictable order ("Board 2" before "Board 10" via numeric collation).
+    results.sort((a, b) => (a.title || '').localeCompare(b.title || '', undefined, { sensitivity: 'base', numeric: true }));
+    return results;
 }
