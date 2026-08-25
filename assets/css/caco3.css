@@ -13,7 +13,7 @@
   /* Brand */
   --caco3-color-brand:         #007AC2;
   --caco3-color-brand-hover:   #00619B;
-  --caco3-color-brand-press:   #004F7D;
+  --caco3-color-brand-press:   #004874;
 
   /* Surface (page backgrounds) */
   --caco3-color-surface-1: #F7F7F7;
@@ -42,15 +42,22 @@
   /* Status */
   --caco3-color-status-info:           #00619B;
   --caco3-color-status-info-hover:     #00476F;
+  --caco3-color-status-info-press:     #003553;
   --caco3-color-status-success:        #288835;
   --caco3-color-status-success-hover:  #1C6226;
+  --caco3-color-status-success-press:  #154A1C;
   --caco3-color-status-warning:        #DA7C0B;
   --caco3-color-status-warning-hover:  #B56508;
+  --caco3-color-status-warning-press:  #884C06;
   --caco3-color-status-danger:         #D83020;
-  --caco3-color-status-danger-hover:   #A82517;
+  --caco3-color-status-danger-hover:   #A82B1E;
+  --caco3-color-status-danger-press:   #7C1D13;
 
   /* Inverse (dark surface for light text) */
   --caco3-color-inverse: #1A1A1A;
+
+  /* Scrim overlay (calcite: --calcite-color-transparent-scrim) */
+  --caco3-color-transparent-scrim: rgba(255, 255, 255, 0.85);
 
   /* ---- Typography ---- */
   --caco3-font-family:      "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -114,6 +121,21 @@
   --caco3-focus-width:  2px;
   --caco3-focus-offset: 2px;
 
+  /* ---- Carousel ---- */
+  --caco3-carousel-dot-size:         8px;
+  --caco3-carousel-dot-gap:          6px;
+  --caco3-carousel-dot-color:        var(--caco3-color-border-1);
+  --caco3-carousel-dot-color-hover:  var(--caco3-color-text-3);
+  --caco3-carousel-dot-color-active: var(--caco3-color-brand);
+
+  /* ---- Stepper ---- */
+  --caco3-stepper-bar-height:         3px;
+  --caco3-stepper-bar-color:          var(--caco3-color-border-3);
+  --caco3-stepper-bar-selected-color: var(--caco3-color-brand);
+  --caco3-stepper-bar-complete-color: var(--caco3-color-brand);
+  --caco3-stepper-bar-error-color:    var(--caco3-color-status-danger);
+  --caco3-stepper-indicator-size:     24px;
+
   /* ---- Drawer ---- */
   --caco3-drawer-width:          360px;
   --caco3-drawer-bg:             var(--caco3-color-foreground-1);
@@ -149,8 +171,8 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-mode="light"]) {
     --caco3-color-brand:       #009AF2;
-    --caco3-color-brand-hover: #33AEFF;
-    --caco3-color-brand-press: #66C2FF;
+    --caco3-color-brand-hover: #40B9FF;
+    --caco3-color-brand-press: #80D1FF;
 
     --caco3-color-surface-1: #363636;
     --caco3-color-surface-2: #2B2B2B;
@@ -165,23 +187,29 @@
     --caco3-color-text-2:       #BFBFBF;
     --caco3-color-text-3:       #9E9E9E;
     --caco3-color-text-inverse: #141414;
-    --caco3-color-text-link:    #33AEFF;
+    --caco3-color-text-link:    #00A0FF;
 
     --caco3-color-border-1:     #545454;
     --caco3-color-border-2:     #4A4A4A;
     --caco3-color-border-3:     #404040;
     --caco3-color-border-input: #757575;
 
-    --caco3-color-status-info:           #00A0FF;
-    --caco3-color-status-info-hover:     #33B2FF;
-    --caco3-color-status-success:        #36DA43;
-    --caco3-color-status-success-hover:  #5AE365;
-    --caco3-color-status-warning:        #F89927;
-    --caco3-color-status-warning-hover:  #FAB054;
-    --caco3-color-status-danger:         #FE583E;
-    --caco3-color-status-danger-hover:   #FF7A64;
+    --caco3-color-status-info:            #00A0FF;
+    --caco3-color-status-info-hover:      #40B9FF;
+    --caco3-color-status-info-press:      #80D1FF;
+    --caco3-color-status-success:         #36DA43;
+    --caco3-color-status-success-hover:   #6DF278;
+    --caco3-color-status-success-press:   #9DF2A3;
+    --caco3-color-status-warning:         #F89927;
+    --caco3-color-status-warning-hover:   #FFAF4F;
+    --caco3-color-status-warning-press:   #FFC47D;
+    --caco3-color-status-danger:          #FE583E;
+    --caco3-color-status-danger-hover:    #FE7863;
+    --caco3-color-status-danger-press:    #FE9989;
 
     --caco3-color-inverse: #FFFFFF;
+
+    --caco3-color-transparent-scrim: rgba(0, 0, 0, 0.85);
 
     --caco3-focus-color: #009AF2;
 
@@ -193,8 +221,8 @@
 
 :root[data-mode="dark"] {
   --caco3-color-brand:       #009AF2;
-  --caco3-color-brand-hover: #33AEFF;
-  --caco3-color-brand-press: #66C2FF;
+  --caco3-color-brand-hover: #40B9FF;
+  --caco3-color-brand-press: #80D1FF;
 
   --caco3-color-surface-1: #363636;
   --caco3-color-surface-2: #2B2B2B;
@@ -209,23 +237,29 @@
   --caco3-color-text-2:       #BFBFBF;
   --caco3-color-text-3:       #9E9E9E;
   --caco3-color-text-inverse: #141414;
-  --caco3-color-text-link:    #33AEFF;
+  --caco3-color-text-link:    #40B9FF;
 
   --caco3-color-border-1:     #545454;
   --caco3-color-border-2:     #4A4A4A;
   --caco3-color-border-3:     #404040;
   --caco3-color-border-input: #757575;
 
-  --caco3-color-status-info:           #00A0FF;
-  --caco3-color-status-info-hover:     #33B2FF;
-  --caco3-color-status-success:        #36DA43;
-  --caco3-color-status-success-hover:  #5AE365;
-  --caco3-color-status-warning:        #F89927;
-  --caco3-color-status-warning-hover:  #FAB054;
-  --caco3-color-status-danger:         #FE583E;
-  --caco3-color-status-danger-hover:   #FF7A64;
+  --caco3-color-status-info:            #00A0FF;
+  --caco3-color-status-info-hover:      #40B9FF;
+  --caco3-color-status-info-press:      #80D1FF;
+  --caco3-color-status-success:         #36DA43;
+  --caco3-color-status-success-hover:   #6DF278;
+  --caco3-color-status-success-press:   #9DF2A3;
+  --caco3-color-status-warning:         #F89927;
+  --caco3-color-status-warning-hover:   #FFAF4F;
+  --caco3-color-status-warning-press:   #FFC47D;
+  --caco3-color-status-danger:          #FE583E;
+  --caco3-color-status-danger-hover:    #FE7863;
+  --caco3-color-status-danger-press:    #FE9989;
 
   --caco3-color-inverse: #FFFFFF;
+
+  --caco3-color-transparent-scrim: rgba(0, 0, 0, 0.85);
 
   --caco3-focus-color: #009AF2;
 
@@ -554,6 +588,10 @@ button[data-kind="danger"]:hover {
   background-color: var(--caco3-color-status-danger-hover);
 }
 
+button[data-kind="danger"]:active {
+  background-color: var(--caco3-color-status-danger-press);
+}
+
 /* ---- Kind: Neutral ---- */
 
 button[data-kind="neutral"] {
@@ -830,7 +868,138 @@ input[type="checkbox"][data-scale="l"] {
   block-size: 20px;
 }
 
-input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+/* ---- Radio ---- */
+
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  flex-shrink: 0;
+
+  /* Medium (default) — matches the checkbox 16px scale;
+     the ring thickness leaves a clear center dot when checked */
+  --caco3-radio-ring: 5px;
+  inline-size: 16px;
+  block-size: 16px;
+
+  background-color: var(--caco3-color-foreground-1);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-border-input);
+
+  border: none;
+  border-radius: 50%;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: box-shadow var(--caco3-animation-timing);
+}
+
+input[type="radio"]:hover {
+  box-shadow: inset 0 0 0 2px var(--caco3-color-border-input);
+}
+
+/* Checked — thick brand ring around a clear center (Calcite radio) */
+input[type="radio"]:checked {
+  box-shadow: inset 0 0 0 var(--caco3-radio-ring) var(--caco3-color-brand);
+}
+
+input[type="radio"]:checked:hover {
+  box-shadow: inset 0 0 0 var(--caco3-radio-ring) var(--caco3-color-brand-hover);
+}
+
+input[type="radio"]:checked:active {
+  box-shadow: inset 0 0 0 var(--caco3-radio-ring) var(--caco3-color-brand-press);
+}
+
+input[type="radio"]:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: var(--caco3-focus-offset);
+}
+
+input[type="radio"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Scale: Small — 12px */
+input[type="radio"][data-scale="s"] {
+  --caco3-radio-ring: 4px;
+  inline-size: 12px;
+  block-size: 12px;
+}
+
+/* Scale: Large — 20px */
+input[type="radio"][data-scale="l"] {
+  --caco3-radio-ring: 6px;
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+/* ---- Switch ----
+   A checkbox with the switch role:
+     <label><input type="checkbox" role="switch"> Enable sync</label>
+   The role is both the styling hook and the accessibility semantics. */
+
+input[type="checkbox"][role="switch"] {
+  /* Medium (default) — 32×16 track, 12px handle */
+  --caco3-switch-handle: 12px;
+  inline-size: 32px;
+  block-size: 16px;
+
+  border-radius: var(--caco3-corner-radius-circle);
+  background-color: var(--caco3-color-foreground-2);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-border-input);
+
+  /* Handle — background image, since inputs can't host pseudo-elements */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23ffffff' stroke='%23757575' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: var(--caco3-switch-handle) var(--caco3-switch-handle);
+  background-position: 2px center;
+  background-repeat: no-repeat;
+
+  transition:
+    background-color var(--caco3-animation-timing),
+    background-position var(--caco3-animation-timing),
+    box-shadow var(--caco3-animation-timing);
+}
+
+input[type="checkbox"][role="switch"]:hover {
+  box-shadow: inset 0 0 0 2px var(--caco3-color-border-input);
+}
+
+input[type="checkbox"][role="switch"]:checked {
+  background-color: var(--caco3-color-brand);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-brand);
+  background-position: calc(100% - 2px) center;
+}
+
+input[type="checkbox"][role="switch"]:checked:hover {
+  background-color: var(--caco3-color-brand-hover);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-brand-hover);
+}
+
+input[type="checkbox"][role="switch"]:checked:active {
+  background-color: var(--caco3-color-brand-press);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-brand-press);
+}
+
+/* Scale: Small — 24×12 track */
+input[type="checkbox"][role="switch"][data-scale="s"] {
+  --caco3-switch-handle: 8px;
+  inline-size: 24px;
+  block-size: 12px;
+}
+
+/* Scale: Large — 40×20 track */
+input[type="checkbox"][role="switch"][data-scale="l"] {
+  --caco3-switch-handle: 16px;
+  inline-size: 40px;
+  block-size: 20px;
+}
+
+input:where(:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"])),
 textarea,
 select {
   display: block;
@@ -852,23 +1021,23 @@ select {
   appearance: none;
 }
 
-input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+input:where(:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"])),
 select {
   min-block-size: 32px;
 }
 
-input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):hover,
+input:where(:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"])):hover,
 textarea:hover,
 select:hover {
   border-color: var(--caco3-color-border-1);
 }
 
-input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):focus,
+input:where(:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"])):focus,
 textarea:focus,
 select:focus {
   outline: none;
   border-color: var(--caco3-color-brand);
-  box-shadow: 0 0 0 var(--caco3-focus-width) rgba(0, 122, 194, 0.25);
+  box-shadow: 0 0 0 var(--caco3-focus-width) color-mix(in srgb, var(--caco3-focus-color) 25%, transparent);
 }
 
 textarea {
@@ -882,6 +1051,156 @@ select {
   background-position: right 10px center;
   padding-inline-end: 28px;
   cursor: pointer;
+}
+
+/* ---- File input ----
+   Dashed drop-target border (matches Calcite's file input); the
+   browse button is styled like a small neutral button. Dropping a
+   file onto the input works natively — no JS required. */
+
+input[type="file"] {
+  padding: var(--caco3-spacing-2);
+  border-style: dashed;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  font-family: var(--caco3-font-family);
+  font-size: var(--caco3-font-size--1);
+  font-weight: var(--caco3-font-weight-normal);
+  color: var(--caco3-color-text-1);
+  background-color: var(--caco3-color-foreground-3);
+  border: var(--caco3-border-width) solid var(--caco3-color-border-1);
+  border-radius: 0;
+  padding: 3px 10px;
+  margin-inline-end: var(--caco3-spacing-3);
+  cursor: pointer;
+  transition: background-color var(--caco3-animation-timing);
+}
+
+input[type="file"]:hover::file-selector-button {
+  background-color: var(--caco3-color-border-1);
+}
+
+/* ---- Drop zone ----
+   A large drag-and-drop file target:
+     <label data-dropzone>
+       <input type="file" multiple>
+       <i class="ph-thin ph-cloud-arrow-up"></i>
+       <strong>Drag and drop files here</strong>
+       <small>or click to browse</small>
+     </label>
+   The file input is stretched invisibly over the whole zone, so
+   click-to-browse AND native drag-and-drop both work without JS. */
+
+[data-dropzone] {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--caco3-spacing-1);
+  padding: var(--caco3-spacing-8) var(--caco3-spacing-4);
+  background-color: var(--caco3-color-foreground-1);
+  border: var(--caco3-border-width) dashed var(--caco3-color-border-input);
+  margin-block-end: var(--caco3-spacing-4);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--caco3-animation-timing),
+    background-color var(--caco3-animation-timing),
+    box-shadow var(--caco3-animation-timing);
+}
+
+[data-dropzone]:hover,
+[data-dropzone]:focus-within {
+  border-color: var(--caco3-color-brand);
+  background-color: var(--caco3-color-foreground-2);
+}
+
+[data-dropzone]:focus-within {
+  box-shadow: 0 0 0 var(--caco3-focus-width) color-mix(in srgb, var(--caco3-focus-color) 25%, transparent);
+}
+
+/* The invisible input covering the zone — the real click/drop target */
+[data-dropzone] > input[type="file"] {
+  position: absolute;
+  inset: 0;
+  block-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+[data-dropzone] i {
+  font-size: 32px;
+  color: var(--caco3-color-text-3);
+}
+
+[data-dropzone] strong {
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-medium);
+  color: var(--caco3-color-text-1);
+}
+
+[data-dropzone] small {
+  font-size: var(--caco3-font-size--1);
+  font-weight: var(--caco3-font-weight-normal);
+  color: var(--caco3-color-text-3);
+}
+
+/* ---- Invalid state ----
+   Two triggers, one look:
+     :user-invalid          — native constraint validation (required,
+                              type="email", pattern…) once the user
+                              has interacted with the field
+     [aria-invalid="true"]  — server/JS-driven; doubles as the
+                              accessibility hook
+
+   Optional validation message — a <small> directly after the control
+   stays hidden until the control is invalid:
+     <input type="email" required>
+     <small>Enter a valid email address.</small> */
+
+:where(input, select, textarea):user-invalid,
+:where(input, select, textarea)[aria-invalid="true"] {
+  border-color: var(--caco3-color-status-danger);
+}
+
+:where(input, select, textarea):user-invalid:focus,
+:where(input, select, textarea)[aria-invalid="true"]:focus {
+  border-color: var(--caco3-color-status-danger);
+  box-shadow: 0 0 0 var(--caco3-focus-width) color-mix(in srgb, var(--caco3-color-status-danger) 25%, transparent);
+}
+
+/* Checkbox & radio — danger ring via the inset box-shadow border */
+input[type="checkbox"]:user-invalid,
+input[type="checkbox"][aria-invalid="true"],
+input[type="radio"]:user-invalid,
+input[type="radio"][aria-invalid="true"] {
+  box-shadow: inset 0 0 0 1px var(--caco3-color-status-danger);
+}
+
+/* Drop zone — danger border when its file input is invalid */
+[data-dropzone]:has(> input:user-invalid),
+[data-dropzone]:has(> input[aria-invalid="true"]) {
+  border-color: var(--caco3-color-status-danger);
+}
+
+/* Validation message — hidden at rest, shown in danger when invalid */
+:where(input:not([type="button"]):not([type="submit"]):not([type="reset"]), select, textarea) + small {
+  display: none;
+}
+
+:where(input, select, textarea):where(:user-invalid, [aria-invalid="true"]) + small {
+  display: block;
+  font-size: var(--caco3-font-size--1);
+  color: var(--caco3-color-status-danger);
+  /* pull up under the field's 16px bottom margin, restore the rhythm */
+  margin-block-start: calc(-1 * var(--caco3-spacing-3));
+  margin-block-end: var(--caco3-spacing-4);
 }
 
 
@@ -900,6 +1219,210 @@ legend {
   letter-spacing: 0.05em;
 }
 
+/* Inline form row — put controls on one line:
+     <div data-inline>
+       <input type="text" placeholder="Filter…">
+       <select>…</select>
+       <label><input type="checkbox"> Option</label>
+       <button>Apply</button>
+     </div>
+   Text inputs and selects share the available width; checkbox
+   labels and buttons keep their natural size. */
+[data-inline] {
+  display: flex;
+  align-items: center;
+  gap: var(--caco3-spacing-2);
+  margin-block-end: var(--caco3-spacing-4);
+}
+
+[data-inline] > input:where(:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"])),
+[data-inline] > select {
+  width: auto;
+  flex: 1;
+  margin: 0;
+}
+
+[data-inline] > label:has(input) {
+  margin: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+[data-inline] > button {
+  flex-shrink: 0;
+}
+
+
+/* ============================================================
+   Chip
+
+   Expected markup:
+     <span data-chip>Neutral</span>
+     <span data-chip data-kind="brand">Brand</span>
+     <span data-chip data-appearance="outline">Outline</span>
+     <span data-chip><i class="ph-thin ph-map-pin"></i> With icon</span>
+     <span data-chip>Closable
+       <button aria-label="Remove"
+               onclick="this.closest('[data-chip]').remove()">&#x2715;</button>
+     </span>
+
+   Kinds:      neutral (default) | brand | inverse
+   Appearance: solid (default) | outline | outline-fill
+   Scales:     data-scale="s" | (default m) | "l"
+   Selected:   aria-selected="true" (toggle with your own JS)
+   ============================================================ */
+
+[data-chip] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--caco3-spacing-2);
+
+  /* Medium (default) — 32px pill, 14px label */
+  block-size: 32px;
+  padding-inline: var(--caco3-spacing-3);
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-medium);
+
+  color: var(--caco3-color-text-1);
+  background-color: var(--caco3-color-foreground-2);
+  border: var(--caco3-border-width) solid transparent;
+  border-radius: var(--caco3-corner-radius-circle);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* ---- Appearance ---- */
+
+[data-chip][data-appearance="outline"] {
+  background-color: transparent;
+  border-color: var(--caco3-color-border-1);
+}
+
+[data-chip][data-appearance="outline-fill"] {
+  background-color: var(--caco3-color-foreground-1);
+  border-color: var(--caco3-color-border-1);
+}
+
+/* ---- Kind: Brand ---- */
+
+[data-chip][data-kind="brand"] {
+  background-color: var(--caco3-color-brand);
+  color: var(--caco3-color-text-inverse);
+}
+
+[data-chip][data-kind="brand"][data-appearance="outline"] {
+  background-color: transparent;
+  border-color: var(--caco3-color-brand);
+  color: var(--caco3-color-brand);
+}
+
+[data-chip][data-kind="brand"][data-appearance="outline-fill"] {
+  background-color: var(--caco3-color-foreground-1);
+  border-color: var(--caco3-color-brand);
+  color: var(--caco3-color-brand);
+}
+
+/* ---- Kind: Inverse ---- */
+
+[data-chip][data-kind="inverse"] {
+  background-color: var(--caco3-color-inverse);
+  color: var(--caco3-color-foreground-1);
+}
+
+[data-chip][data-kind="inverse"][data-appearance="outline"] {
+  background-color: transparent;
+  border-color: var(--caco3-color-inverse);
+  color: var(--caco3-color-text-1);
+}
+
+[data-chip][data-kind="inverse"][data-appearance="outline-fill"] {
+  background-color: var(--caco3-color-foreground-1);
+  border-color: var(--caco3-color-inverse);
+  color: var(--caco3-color-text-1);
+}
+
+/* ---- Status kinds — notice-style: subtle tinted fill with the
+   border, text, and icon all in the status colour ---- */
+
+[data-chip][data-kind="info"] {
+  background-color: color-mix(in srgb, var(--caco3-color-status-info) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-status-info);
+  color: var(--caco3-color-status-info);
+}
+
+[data-chip][data-kind="success"] {
+  background-color: color-mix(in srgb, var(--caco3-color-status-success) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-status-success);
+  color: var(--caco3-color-status-success);
+}
+
+[data-chip][data-kind="warning"] {
+  background-color: color-mix(in srgb, var(--caco3-color-status-warning) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-status-warning);
+  color: var(--caco3-color-status-warning);
+}
+
+[data-chip][data-kind="danger"] {
+  background-color: color-mix(in srgb, var(--caco3-color-status-danger) 8%, var(--caco3-color-foreground-1));
+  border-color: var(--caco3-color-status-danger);
+  color: var(--caco3-color-status-danger);
+}
+
+/* Status + outline — drop the tint, keep the coloured border/text */
+[data-chip][data-appearance="outline"]:is([data-kind="info"], [data-kind="success"], [data-kind="warning"], [data-kind="danger"]) {
+  background-color: transparent;
+}
+
+/* ---- Selected ---- */
+
+[data-chip][aria-selected="true"] {
+  border-color: var(--caco3-color-brand);
+  box-shadow: inset 0 0 0 1px var(--caco3-color-brand);
+}
+
+/* ---- Scales ---- */
+
+[data-chip][data-scale="s"] {
+  block-size: 24px;
+  padding-inline: var(--caco3-spacing-2);
+  font-size: var(--caco3-font-size--1);
+  gap: var(--caco3-spacing-1);
+}
+
+[data-chip][data-scale="l"] {
+  block-size: 40px;
+  padding-inline: var(--caco3-spacing-4);
+  font-size: var(--caco3-font-size-1);
+}
+
+/* ---- Close button — inherits the chip's text color ---- */
+
+[data-chip] > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 18px;
+  block-size: 18px;
+  min-block-size: unset;
+  /* tuck into the pill's end padding */
+  margin-inline-end: calc(-1 * var(--caco3-spacing-1));
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  color: inherit;
+  font-size: 0.875em;
+  cursor: pointer;
+}
+
+[data-chip] > button:hover {
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+[data-chip] > button:active {
+  background-color: color-mix(in srgb, currentColor 25%, transparent);
+}
+
 
 /* ============================================================
    Navigation
@@ -913,6 +1436,12 @@ legend {
        </ul>
        <div>...</div>                ← optional end slot (search, user icon)
      </nav>
+
+   With a logo, wrap the text in a <span> so it stays stacked:
+     <a href="/">
+       <img src="logo.svg" alt="">
+       <span>Brand Title <small>Description</small></span>
+     </a>
    ============================================================ */
 
 nav {
@@ -952,6 +1481,30 @@ nav > a:first-of-type {
 nav > a:first-of-type:hover {
   color: var(--caco3-color-text-1);
   text-decoration: none;
+}
+
+/* Brand link with a leading logo (<img> or <svg>) — switch to a row;
+   the text stack lives in a <span> */
+nav > a:first-of-type:has(> img, > svg) {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--caco3-spacing-3);
+}
+
+/* Logo — square, sized so the 64px bar leaves equal 12px padding on
+   every side (12 + 40 + 12 = 64; the gap to the text matches) */
+nav > a:first-of-type > :is(img, svg) {
+  inline-size: calc(64px - 2 * var(--caco3-spacing-3));
+  block-size: calc(64px - 2 * var(--caco3-spacing-3));
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Text stack next to the logo */
+nav > a:first-of-type > span {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 /* Description / subtitle inside the brand link */
@@ -1020,6 +1573,178 @@ nav > *:last-child:not(ul):not(a:first-of-type) {
   align-self: center;
 }
 
+/* ---- Collapsing to a menu (mobile) ----
+   Opt in by giving the link list a popover id and adding a menu button:
+     <nav>
+       <a href="/">Brand</a>
+       <button popovertarget="nav-menu" data-appearance="transparent"
+               data-icon-only aria-label="Menu">☰</button>
+       <ul id="nav-menu" popover>…</ul>
+       <button>…optional trailing slot…</button>
+     </nav>
+   ≥768px: the list renders inline, exactly like a plain <ul>.
+   <768px: the list collapses and the button opens it as a panel under
+   the bar — open/close, Esc, and tap-outside are native popover
+   behavior, zero JS. */
+
+/* Desktop — hide the menu button and neutralise the UA popover box
+   (position:fixed, inset:0, border, Canvas background…) so the list
+   renders inline as if the attribute weren't there */
+nav > button[popovertarget] {
+  display: none;
+}
+
+nav > ul[popover] {
+  display: flex;
+  position: static;
+  inset: auto;
+  inline-size: auto;
+  block-size: auto;
+  margin: 0;
+  border: none;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+@media (max-width: 767px) {
+  nav > button[popovertarget] {
+    display: inline-flex;
+    margin-inline-start: auto;
+    align-self: center;
+  }
+
+  /* The menu button takes over the end-slot push; trailing content
+     sits beside it instead of fighting it for the free space */
+  nav:has(> button[popovertarget]) > *:last-child:not(ul):not(a:first-of-type):not([popovertarget]) {
+    margin-inline-start: 0;
+  }
+
+  nav > ul[popover]:not(:popover-open) {
+    display: none;
+  }
+
+  /* Open — full-width panel fixed under the 64px bar (top layer) */
+  nav > ul[popover]:popover-open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: fixed;
+    inset-block-start: 64px;
+    inset-block-end: auto;
+    inset-inline: 0;
+    inline-size: 100%;
+    max-block-size: calc(100vh - 64px);
+    max-block-size: calc(100dvh - 64px);
+    overflow-y: auto;
+    margin: 0;
+    padding-block: var(--caco3-spacing-2);
+    padding-inline: 0;
+    border: none;
+    border-block-end: var(--caco3-border-width) solid var(--caco3-color-border-3);
+    background-color: var(--caco3-color-foreground-1);
+    box-shadow: var(--caco3-shadow-md);
+  }
+
+  nav > ul[popover]:popover-open li {
+    display: block;
+  }
+
+  nav > ul[popover]:popover-open a {
+    display: flex;
+    padding-block: var(--caco3-spacing-3);
+    padding-inline: var(--caco3-spacing-6);
+  }
+
+  /* Active indicator moves from a bottom bar to an inline-start bar */
+  nav > ul[popover]:popover-open a[aria-current="page"]::after {
+    inset-block: 0;
+    inset-inline: 0 auto;
+    block-size: auto;
+    inline-size: 2px;
+  }
+
+  /* Safety net for plain (non-popover) markup — scroll the link list
+     inside the bar instead of overflowing the page */
+  nav > ul:not([popover]) {
+    overflow-x: auto;
+    min-inline-size: 0;
+  }
+}
+
+
+/* ============================================================
+   Loader & Scrim
+
+   Spinner:  <span data-spinner></span>
+             scales: data-scale="s" (16px) | default (24px) | "l" (32px)
+
+   Scrim:    toggle data-loading on any container to overlay it with
+             a scrim and centered spinner (calcite-scrim equivalent):
+               el.toggleAttribute('data-loading', busy)
+   ============================================================ */
+
+[data-spinner] {
+  display: inline-block;
+  inline-size: 24px;
+  block-size: 24px;
+  border: 2px solid var(--caco3-color-border-2);
+  border-block-start-color: var(--caco3-color-brand);
+  border-radius: 50%;
+  animation: caco3-spin 800ms linear infinite;
+}
+
+[data-spinner][data-scale="s"] {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+[data-spinner][data-scale="l"] {
+  inline-size: 32px;
+  block-size: 32px;
+  border-width: 3px;
+}
+
+@keyframes caco3-spin {
+  to { rotate: 1turn; }
+}
+
+/* Scrim overlay — ::before dims the container, ::after is the spinner */
+[data-loading] {
+  position: relative;
+  pointer-events: none;
+}
+
+[data-loading]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: var(--caco3-z-index-overlay);
+  background-color: var(--caco3-color-transparent-scrim);
+}
+
+[data-loading]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  z-index: var(--caco3-z-index-overlay);
+  inline-size: 32px;
+  block-size: 32px;
+  border: 3px solid var(--caco3-color-border-2);
+  border-block-start-color: var(--caco3-color-brand);
+  border-radius: 50%;
+  animation: caco3-spin 800ms linear infinite;
+}
+
+/* Still communicate "busy", just gently */
+@media (prefers-reduced-motion: reduce) {
+  [data-spinner],
+  [data-loading]::after {
+    animation-duration: 3s;
+  }
+}
+
 
 /* ============================================================
    Dialog
@@ -1050,11 +1775,12 @@ dialog {
   z-index: var(--caco3-z-index-modal);
   inset: 0;          /* stretch to viewport edges so margin: auto has room to work */
   margin: auto;      /* distribute remaining space equally — centers both axes */
-  block-size: fit-content;
+  block-size: fit-content; /* auto would stretch to fill the pinned insets */
   flex-direction: column;
 
   /* Default size — small (32rem) */
   inline-size: min(32rem, calc(100vw - var(--caco3-spacing-8) * 2));
+  max-block-size: calc(100vh - var(--caco3-spacing-8) * 2);
   max-block-size: calc(100dvh - var(--caco3-spacing-8) * 2);
 
   background-color: var(--caco3-color-foreground-1);
@@ -1089,7 +1815,7 @@ dialog[open] {
 }
 
 dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: var(--caco3-color-transparent-scrim);
   opacity: 0;
   transition:
     opacity var(--caco3-animation-timing-slow),
@@ -1180,6 +1906,24 @@ dialog > footer {
 
 dialog[data-size="m"] {
   inline-size: min(48rem, calc(100vw - var(--caco3-spacing-8) * 2));
+}
+
+/* ---- Wait dialog (caco3Dialog.wait) — spinner + message ---- */
+
+dialog[data-wait] {
+  inline-size: fit-content;
+  min-inline-size: 16rem;
+  max-inline-size: min(32rem, calc(100vw - var(--caco3-spacing-8) * 2));
+}
+
+dialog[data-wait] > div {
+  display: flex;
+  align-items: center;
+  gap: var(--caco3-spacing-4);
+}
+
+dialog[data-wait] p {
+  margin: 0;
 }
 
 dialog[data-size="l"] {
@@ -1613,6 +2357,21 @@ aside[data-kind] > button:focus-visible {
   pointer-events: none;
 }
 
+/* The tray is promoted to the top layer as a manual popover (so alerts
+   render above modal dialogs) — cancel the UA [popover] box styles.
+   Must precede the placement rules below so their edge offsets win. */
+.caco3-alert-tray[popover] {
+  inset: auto;
+  inline-size: auto;
+  block-size: auto;
+  margin: 0;
+  border: none;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+}
+
 /* Bottom placements — stack newest at bottom */
 .caco3-alert-tray[data-placement="bottom-end"] {
   flex-direction: column-reverse;
@@ -1774,6 +2533,42 @@ aside[data-kind] > button:focus-visible {
    ============================================================ */
 
 /* ---- Layout ---- */
+
+/* Scroll region around the table so wide tables scroll horizontally
+   instead of overflowing the container; toolbar and pager stay put */
+.caco3-grid__scroller {
+  overflow-x: auto;
+}
+
+/* ---- Scrollable variant (data-scrollable) ----
+   No pagination; all rows scroll inside a fixed-height region.
+   Override the height per instance: style="--caco3-grid-height: 400px" */
+
+.caco3-grid--scrollable .caco3-grid__scroller {
+  overflow-y: auto;
+  max-block-size: var(--caco3-grid-height, 320px);
+}
+
+.caco3-grid--scrollable table {
+  margin-block-end: 0;
+  /* The base table rule sets overflow: hidden, which makes the table the
+     sticky containment block, so th could never stick to the scroller.
+     Separate borders because collapsed borders break sticky in some engines. */
+  overflow: visible;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Sticky header. The collapsed bottom border of th does not travel with
+   position: sticky, so it is replaced with an inset box-shadow. */
+.caco3-grid--scrollable th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  background-color: var(--caco3-color-foreground-3);
+  border-block-end: none;
+  box-shadow: inset 0 -1px 0 var(--caco3-color-border-3);
+}
 
 .caco3-grid__toolbar {
   display: flex;
@@ -2120,4 +2915,300 @@ tbody tr.caco3-grid__row--selected > td {
   align-items: center;
   padding-inline: var(--caco3-spacing-4);
   border-top: 1px solid var(--caco3-color-border-3);
+}
+
+
+/* ============================================================
+   Carousel
+   ============================================================ */
+
+[data-carousel] {
+  position: relative;
+}
+
+[data-carousel-track] {
+  overflow: hidden;
+}
+
+[data-carousel-item][hidden] {
+  display: none;
+}
+
+@keyframes caco3-carousel-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+[data-carousel-item][data-carousel-entering] {
+  animation: caco3-carousel-fade-in var(--caco3-animation-timing);
+}
+
+[data-carousel-controls] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--caco3-spacing-2);
+  padding-block: var(--caco3-spacing-2);
+}
+
+[data-carousel-pagination] {
+  display: flex;
+  align-items: center;
+  gap: var(--caco3-carousel-dot-gap);
+}
+
+[data-carousel-dot] {
+  display: block;
+  width: var(--caco3-carousel-dot-size);
+  height: var(--caco3-carousel-dot-size);
+  min-block-size: 0;
+  border-radius: 50%;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  cursor: pointer;
+  background: var(--caco3-carousel-dot-color);
+  transition:
+    background var(--caco3-animation-timing),
+    transform  var(--caco3-animation-timing);
+}
+
+[data-carousel-dot]:hover {
+  background: var(--caco3-carousel-dot-color-hover);
+}
+
+[data-carousel-dot][aria-pressed="true"] {
+  background: var(--caco3-carousel-dot-color-active);
+  transform: scale(1.375);
+}
+
+
+/* ============================================================
+   Stepper  (caco3-stepper.js)
+   ============================================================
+
+   Multi-step wizard. Maps to calcite-stepper / calcite-stepper-item.
+   JS builds the nav and panel structure from [data-stepper-item] children.
+
+   Usage:
+     <div data-stepper [data-numbered] [data-icon] [data-layout="vertical"]>
+       <div data-stepper-item data-heading="Step 1" [data-description="…"]
+            [data-complete] [data-error] [disabled]>
+         content
+       </div>
+     </div>
+   ============================================================ */
+
+/* ---- Container ---- */
+
+[data-stepper] {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--caco3-font-family);
+}
+
+/* ---- Nav row (horizontal) ---- */
+
+[data-stepper-nav] {
+  display: flex;
+  align-items: stretch;
+}
+
+/* ---- Nav button ---- */
+
+[data-stepper-nav-item] {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--caco3-spacing-2);
+  padding-block: var(--caco3-spacing-3);
+  padding-inline: var(--caco3-spacing-4);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--caco3-animation-timing);
+}
+
+[data-stepper-nav-item]:hover:not([disabled]) {
+  background-color: var(--caco3-color-foreground-2);
+}
+
+[data-stepper-nav-item]:active:not([disabled]) {
+  background-color: var(--caco3-color-foreground-3);
+}
+
+[data-stepper-nav-item]:focus-visible {
+  outline: var(--caco3-focus-width) solid var(--caco3-focus-color);
+  outline-offset: calc(var(--caco3-focus-offset) * -1);
+  border-radius: 2px;
+}
+
+[data-stepper-nav-item][disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---- Bar ---- */
+
+[data-stepper-bar] {
+  position: absolute;
+  background-color: var(--caco3-stepper-bar-color);
+  transition: background-color var(--caco3-animation-timing);
+}
+
+/* Horizontal: bar sits at the top edge */
+[data-stepper]:not([data-layout="vertical"]) [data-stepper-bar] {
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: var(--caco3-stepper-bar-height);
+  inline-size: auto;
+}
+
+/* Vertical: bar sits on the inline-start edge */
+[data-stepper][data-layout="vertical"] [data-stepper-bar] {
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: var(--caco3-stepper-bar-height);
+  block-size: auto;
+}
+
+[data-stepper-nav-item][aria-selected="true"] [data-stepper-bar] {
+  background-color: var(--caco3-stepper-bar-selected-color);
+}
+
+[data-stepper-nav-item][data-complete] [data-stepper-bar] {
+  background-color: var(--caco3-stepper-bar-complete-color);
+}
+
+[data-stepper-nav-item][data-error] [data-stepper-bar] {
+  background-color: var(--caco3-stepper-bar-error-color);
+}
+
+[data-stepper-nav-item][disabled] [data-stepper-bar] {
+  background-color: var(--caco3-stepper-bar-color);
+}
+
+/* ---- Indicator circle (number / icon) ---- */
+
+[data-stepper-indicator] {
+  flex-shrink: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--caco3-stepper-indicator-size);
+  height: var(--caco3-stepper-indicator-size);
+  border-radius: 50%;
+  font-size: var(--caco3-font-size--1);
+  font-weight: var(--caco3-font-weight-medium);
+  line-height: 1;
+  background-color: var(--caco3-color-foreground-3);
+  color: var(--caco3-color-text-3);
+  transition:
+    background-color var(--caco3-animation-timing),
+    color var(--caco3-animation-timing);
+}
+
+[data-stepper][data-numbered] [data-stepper-indicator],
+[data-stepper][data-icon] [data-stepper-indicator] {
+  display: flex;
+}
+
+[data-stepper-indicator] i {
+  font-size: 14px;
+  line-height: 1;
+}
+
+[data-stepper-nav-item][aria-selected="true"] [data-stepper-indicator] {
+  background-color: var(--caco3-stepper-bar-selected-color);
+  color: var(--caco3-color-text-inverse);
+}
+
+[data-stepper-nav-item][data-complete] [data-stepper-indicator] {
+  background-color: var(--caco3-stepper-bar-complete-color);
+  color: var(--caco3-color-text-inverse);
+}
+
+[data-stepper-nav-item][data-error] [data-stepper-indicator] {
+  background-color: var(--caco3-stepper-bar-error-color);
+  color: var(--caco3-color-text-inverse);
+}
+
+[data-stepper-nav-item][disabled] [data-stepper-indicator] {
+  background-color: var(--caco3-color-foreground-3);
+  color: var(--caco3-color-text-3);
+}
+
+/* ---- Labels ---- */
+
+[data-stepper-labels] {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+}
+
+[data-stepper-heading] {
+  display: block;
+  font-size: var(--caco3-font-size-0);
+  font-weight: var(--caco3-font-weight-medium);
+  color: var(--caco3-color-text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--caco3-animation-timing);
+}
+
+[data-stepper-description] {
+  display: block;
+  font-size: var(--caco3-font-size--1);
+  color: var(--caco3-color-text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-stepper-nav-item]:hover:not([disabled]) [data-stepper-heading] {
+  color: var(--caco3-color-brand);
+}
+
+[data-stepper-nav-item][aria-selected="true"] [data-stepper-heading] {
+  color: var(--caco3-color-brand);
+}
+
+[data-stepper-nav-item][data-error] [data-stepper-heading] {
+  color: var(--caco3-color-status-danger);
+}
+
+/* ---- Content panels ---- */
+
+[data-stepper-panel] {
+  padding-block: var(--caco3-spacing-4);
+}
+
+[data-stepper-panel][hidden] {
+  display: none;
+}
+
+/* ---- Layout: vertical ---- */
+
+[data-stepper][data-layout="vertical"] {
+  display: block;
+}
+
+[data-stepper-group] {
+  display: block;
+}
+
+[data-stepper][data-layout="vertical"] [data-stepper-nav-item] {
+  flex: unset;
+  width: 100%;
+  padding-inline-start: calc(var(--caco3-stepper-bar-height) + var(--caco3-spacing-4));
+}
+
+[data-stepper][data-layout="vertical"] [data-stepper-panel] {
+  padding-inline-start: calc(var(--caco3-stepper-bar-height) + var(--caco3-spacing-4));
+  padding-inline-end: var(--caco3-spacing-4);
 }
