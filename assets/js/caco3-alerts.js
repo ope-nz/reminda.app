@@ -1,7 +1,10 @@
-/*!
+﻿/*!
  * caco3-alerts — toast notifications for CaCO3
  * Usage: caco3Alerts.show(message, options?)
  *        caco3Alerts.show(title, message, options?)
+ *
+ * Local adaptation: icon classes use "ph" instead of the upstream "ph-thin",
+ * because this app bundles only the regular-weight Phosphor font.
  */
 (function (global) {
   'use strict';
@@ -30,9 +33,24 @@
       t.setAttribute('aria-live', 'polite');
       t.setAttribute('aria-label', 'Notifications');
       document.body.appendChild(t);
+      // Promote the tray into the top layer so alerts render above
+      // modal dialogs (e.g. caco3Dialog.wait). 'manual' popovers don't
+      // light-dismiss on Esc or outside-click.
+      if (t.showPopover) {
+        t.popover = 'manual';
+        t.showPopover();
+      }
       trays[placement] = t;
     }
     return trays[placement];
+  }
+
+  // Re-promote the tray so it stacks above any dialog opened after it —
+  // top-layer elements paint in promotion order, latest on top.
+  function bringToFront(tray) {
+    if (!tray.showPopover) return;
+    try { tray.hidePopover(); } catch (e) { /* not open — ignore */ }
+    try { tray.showPopover(); } catch (e) { /* disconnected — ignore */ }
   }
 
   function dismiss(el) {
@@ -79,7 +97,9 @@
     el.innerHTML = html;
     el.querySelector('.caco3-alert__close').addEventListener('click', () => dismiss(el));
 
-    getTray(config.placement).appendChild(el);
+    const tray = getTray(config.placement);
+    tray.appendChild(el);
+    bringToFront(tray);
 
     // Double rAF ensures the element is painted before the transition fires
     requestAnimationFrame(() => requestAnimationFrame(() => {
